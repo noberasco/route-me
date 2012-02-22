@@ -445,7 +445,7 @@
                     }
 
                     averageX /= (double)enclosedAnnotationsCount;
-                    averageY /= (double) enclosedAnnotationsCount;
+                    averageY /= (double)enclosedAnnotationsCount;
 
                     double halfClusterWidth = clusterSize.width / 2.0, halfClusterHeight = clusterSize.height / 2.0;
 

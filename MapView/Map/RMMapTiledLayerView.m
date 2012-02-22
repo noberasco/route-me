@@ -87,12 +87,15 @@
 -(void)drawRect:(CGRect)rect
 {
     CGRect bounds = self.bounds;
+    CGSize tileSideLength = [self tiledLayer].tileSize;
 
-//    NSLog(@"drawRect: {{%f,%f},{%f,%f}}", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    NSLog(@"drawRect: {{%f,%f},{%f,%f}} in bounds: {{%f,%f},{%f,%f}}", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height, bounds.origin.x, bounds.origin.y, bounds.size.width, bounds.size.height);
 
-    short zoom = log2(bounds.size.width / rect.size.width);
-    int x = floor(rect.origin.x / rect.size.width), y = floor(fabs(rect.origin.y / rect.size.height));
-//    NSLog(@"Tile @ x:%d, y:%d, zoom:%d", x, y, zoom);
+    short zoom = log2(bounds.size.height / rect.size.height);
+    int x = floor(fmod((rect.origin.x + tileSideLength.width/2.0), tileSideLength.width) / rect.size.width),
+        y = floor(fabs(rect.origin.y / rect.size.height));
+
+    NSLog(@"Tile @ x:%d, y:%d, zoom:%d", x, y, zoom);
 
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
