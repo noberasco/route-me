@@ -101,6 +101,8 @@
     float _lastZoom;
     CGPoint _lastContentOffset, _accumulatedDelta;
     BOOL _mapScrollViewIsZooming;
+
+    double primeMeridianCorrection;
 }
 
 @synthesize decelerationMode;
@@ -161,6 +163,8 @@
     [self setMinZoom:minZoomLevel];
     [self setMaxZoom:maxZoomLevel];
     [self setZoom:initialZoomLevel];
+
+    primeMeridianCorrection = 0.0;
 
     [self createMapView];
     [self setCenterCoordinate:initialCenterCoordinate animated:NO];
@@ -476,7 +480,7 @@
 
     RMProjectedRect planetBounds = projection.planetBounds;
     RMProjectedPoint normalizedProjectedPoint;
-    normalizedProjectedPoint.x = (center.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - (planetBounds.size.width / 2.0);
+    normalizedProjectedPoint.x = (center.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - primeMeridianCorrection;
     normalizedProjectedPoint.y = (center.y * self.metersPerPixel) - fabs(planetBounds.origin.y);
 
 //    RMLog(@"centerProjectedPoint: {%f,%f}", normalizedProjectedPoint.x, normalizedProjectedPoint.y);
@@ -501,7 +505,7 @@
 
     RMProjectedRect planetBounds = projection.planetBounds;
 	RMProjectedPoint normalizedProjectedPoint;
-	normalizedProjectedPoint.x = centerProjectedPoint.x + fabs(planetBounds.origin.x) + (planetBounds.size.width / 2.0);
+	normalizedProjectedPoint.x = centerProjectedPoint.x + fabs(planetBounds.origin.x) + primeMeridianCorrection;
 	normalizedProjectedPoint.y = centerProjectedPoint.y + fabs(planetBounds.origin.y);
 
     [mapScrollView setContentOffset:CGPointMake((normalizedProjectedPoint.x / self.metersPerPixel) - mapScrollView.bounds.size.width/2.0,
@@ -588,7 +592,7 @@
 
     RMProjectedRect planetBounds = projection.planetBounds;
     RMProjectedRect normalizedProjectedRect;
-    normalizedProjectedRect.origin.x = (bottomLeft.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - (planetBounds.size.width / 2.0);
+    normalizedProjectedRect.origin.x = (bottomLeft.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - primeMeridianCorrection;
     normalizedProjectedRect.origin.y = (bottomLeft.y * self.metersPerPixel) - fabs(planetBounds.origin.y);
     normalizedProjectedRect.size.width = mapScrollView.bounds.size.width * self.metersPerPixel;
     normalizedProjectedRect.size.height = mapScrollView.bounds.size.height * self.metersPerPixel;
@@ -605,7 +609,7 @@
 {
     RMProjectedRect planetBounds = projection.planetBounds;
 	RMProjectedPoint normalizedProjectedPoint;
-	normalizedProjectedPoint.x = boundsRect.origin.x + fabs(planetBounds.origin.x) + (planetBounds.size.width / 2.0);
+	normalizedProjectedPoint.x = boundsRect.origin.x + fabs(planetBounds.origin.x) + primeMeridianCorrection;
 	normalizedProjectedPoint.y = boundsRect.origin.y + fabs(planetBounds.origin.y);
 
     float zoomScale = mapScrollView.zoomScale;
@@ -955,7 +959,7 @@
     _mapScrollViewIsZooming = NO;
 
     int tileSideLength = [[self tileSource] tileSideLength];
-    CGSize contentSize = CGSizeMake(2.0 * tileSideLength, tileSideLength); // zoom level 1
+    CGSize contentSize = CGSizeMake(tileSideLength, tileSideLength); // zoom level 1
 
     mapScrollView = [[UIScrollView alloc] initWithFrame:[self bounds]];
     mapScrollView.delegate = self;
@@ -967,7 +971,7 @@
     mapScrollView.contentSize = contentSize;
     mapScrollView.minimumZoomScale = exp2f([self minZoom]);
     mapScrollView.maximumZoomScale = exp2f([self maxZoom]);
-    mapScrollView.contentOffset = CGPointMake(tileSideLength/2.0, 0.0);
+    mapScrollView.contentOffset = CGPointMake(0.0, 0.0);
 
     tiledLayerView = [[RMMapTiledLayerView alloc] initWithFrame:CGRectMake(0.0, 0.0, contentSize.width, contentSize.height) mapView:self];
     tiledLayerView.delegate = self;
@@ -1175,7 +1179,7 @@
 - (void)observeValueForKeyPath:(NSString *)aKeyPath ofObject:(id)anObject change:(NSDictionary *)change context:(void *)context
 {
     RMProjectedRect planetBounds = projection.planetBounds;
-    metersPerPixel = planetBounds.size.height / mapScrollView.contentSize.height;
+    metersPerPixel = planetBounds.size.width / mapScrollView.contentSize.width;
     zoom = log2f(mapScrollView.zoomScale);
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(correctPositionOfAllAnnotations) object:nil];
@@ -1192,6 +1196,61 @@
     if (zoom == _lastZoom)
     {
         CGPoint contentOffset = mapScrollView.contentOffset;
+
+        if (contentOffset.x < mapScrollView.contentSize.width && contentOffset.x + mapScrollView.bounds.size.width >= mapScrollView.contentSize.width)
+        {
+            CLLocationCoordinate2D lastCenterCoordinate = [self centerCoordinate];
+
+            if (primeMeridianCorrection == 0.0)
+            {
+                primeMeridianCorrection = -(planetBounds.size.width / 2.0);
+                tiledLayerView.primeMeridianCorrection = -([[self tileSource] tileSideLength] / 2.0);
+            }
+            else if (primeMeridianCorrection < 0.0)
+            {
+                primeMeridianCorrection = (planetBounds.size.width / 2.0);
+                tiledLayerView.primeMeridianCorrection = ([[self tileSource] tileSideLength] / 2.0);
+            }
+            else
+            {
+                primeMeridianCorrection = 0.0;
+                tiledLayerView.primeMeridianCorrection = 0.0;
+            }
+
+            [mapScrollView removeObserver:self forKeyPath:@"contentOffset"];
+            [self setCenterCoordinate:lastCenterCoordinate animated:NO];
+            [mapScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+
+            return;
+        }
+        else if (contentOffset.x <= 0.0)
+        {
+            CLLocationCoordinate2D lastCenterCoordinate = [self centerCoordinate];
+
+            if (primeMeridianCorrection == 0.0)
+            {
+                primeMeridianCorrection = (planetBounds.size.width / 2.0);
+                tiledLayerView.primeMeridianCorrection = ([[self tileSource] tileSideLength] / 2.0);
+            }
+            else if (primeMeridianCorrection < 0.0)
+            {
+                primeMeridianCorrection = 0.0;
+                tiledLayerView.primeMeridianCorrection = 0.0;
+            }
+            else
+            {
+                primeMeridianCorrection = -(planetBounds.size.width / 2.0);
+                tiledLayerView.primeMeridianCorrection = -([[self tileSource] tileSideLength] / 2.0);
+            }
+            
+            [mapScrollView removeObserver:self forKeyPath:@"contentOffset"];
+            [self setCenterCoordinate:lastCenterCoordinate animated:NO];
+            [mapScrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:NULL];
+            
+            return;
+        }
+            
+
         CGPoint delta = CGPointMake(_lastContentOffset.x - contentOffset.x, _lastContentOffset.y - contentOffset.y);
         _accumulatedDelta.x += delta.x;
         _accumulatedDelta.y += delta.y;
@@ -1406,7 +1465,7 @@
 {
     RMProjectedRect planetBounds = projection.planetBounds;
     RMProjectedPoint normalizedProjectedPoint;
-	normalizedProjectedPoint.x = projectedPoint.x + fabs(planetBounds.origin.x) + (planetBounds.size.width / 2.0);
+	normalizedProjectedPoint.x = projectedPoint.x + fabs(planetBounds.origin.x) + primeMeridianCorrection;
 	normalizedProjectedPoint.y = projectedPoint.y + fabs(planetBounds.origin.y);
 
     // \bug: There is a rounding error here for high zoom levels
@@ -1426,7 +1485,7 @@
 {
     RMProjectedRect planetBounds = projection.planetBounds;
     RMProjectedPoint normalizedProjectedPoint;
-    normalizedProjectedPoint.x = ((pixelCoordinate.x + mapScrollView.contentOffset.x) * self.metersPerPixel) - fabs(planetBounds.origin.x) - (planetBounds.size.width / 2.0);
+    normalizedProjectedPoint.x = ((pixelCoordinate.x + mapScrollView.contentOffset.x) * self.metersPerPixel) - fabs(planetBounds.origin.x) - primeMeridianCorrection;
     normalizedProjectedPoint.y = ((mapScrollView.contentSize.height - mapScrollView.contentOffset.y - pixelCoordinate.y) * self.metersPerPixel) - fabs(planetBounds.origin.y);
 
 //    RMLog(@"pixelToPoint: {%f,%f} -> {%f,%f}", pixelCoordinate.x, pixelCoordinate.y, normalizedProjectedPoint.x, normalizedProjectedPoint.y);
@@ -1455,7 +1514,7 @@
 
     RMProjectedRect planetBounds = projection.planetBounds;
     RMProjectedPoint normalizedProjectedPoint;
-    normalizedProjectedPoint.x = (origin.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - (planetBounds.size.width / 2.0);
+    normalizedProjectedPoint.x = (origin.x * self.metersPerPixel) - fabs(planetBounds.origin.x) - primeMeridianCorrection;
     normalizedProjectedPoint.y = (origin.y * self.metersPerPixel) - fabs(planetBounds.origin.y);
 
 //    RMLog(@"projectedOrigin: {%f,%f}", normalizedProjectedPoint.x, normalizedProjectedPoint.y);
@@ -1523,7 +1582,7 @@
 {
     RMProjectedRect planetBounds = projection.planetBounds;
 	RMProjectedPoint normalizedProjectedPoint;
-	normalizedProjectedPoint.x = annotation.projectedLocation.x + fabs(planetBounds.origin.x) + (planetBounds.size.width / 2.0);
+	normalizedProjectedPoint.x = annotation.projectedLocation.x + fabs(planetBounds.origin.x) + primeMeridianCorrection;
 	normalizedProjectedPoint.y = annotation.projectedLocation.y + fabs(planetBounds.origin.y);
 
     annotation.position = CGPointMake((normalizedProjectedPoint.x / self.metersPerPixel) - mapScrollView.contentOffset.x, mapScrollView.contentSize.height - (normalizedProjectedPoint.y / self.metersPerPixel) - mapScrollView.contentOffset.y);

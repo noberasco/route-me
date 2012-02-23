@@ -24,9 +24,12 @@
 {
     id <RMMapTiledLayerViewDelegate> delegate;
     RMMapView *mapView;
+
+    float primeMeridianCorrection;
 }
 
 @property (nonatomic, assign) id <RMMapTiledLayerViewDelegate> delegate;
+@property (nonatomic, assign) float primeMeridianCorrection;
 
 - (id)initWithFrame:(CGRect)frame mapView:(RMMapView *)aMapView;
 
