@@ -68,6 +68,8 @@
 - (void)correctPositionOfAllAnnotations;
 - (void)correctPositionOfAllAnnotationsIncludingInvisibles:(BOOL)correctAllLayers wasZoom:(BOOL)wasZoom;
 
+- (void)correctMinZoomScaleForBoundingMask;
+
 @end
 
 #pragma mark -
@@ -96,7 +98,7 @@
     BOOL _delegateHasDidHideLayerForAnnotation;
 
     BOOL _constrainMovement;
-    RMProjectedPoint _northEastConstraint, _southWestConstraint;
+    RMProjectedRect _constrainingProjectedBounds;
 
     float _lastZoom;
     CGPoint _lastContentOffset, _accumulatedDelta;
@@ -112,7 +114,7 @@
 @synthesize screenScale;
 @synthesize tileCache;
 @synthesize quadTree;
-@synthesize enableClustering, positionClusterMarkersAtTheGravityCenter, clusterMarkerSize;
+@synthesize enableClustering, positionClusterMarkersAtTheGravityCenter, clusterMarkerSize, clusterAreaSize;
 @synthesize adjustTilesForRetinaDisplay;
 
 #pragma mark -
@@ -150,6 +152,7 @@
     [self setQuadTree:[[[RMQuadTree alloc] initWithMapView:self] autorelease]];
     enableClustering = positionClusterMarkersAtTheGravityCenter = NO;
     clusterMarkerSize = CGSizeMake(100.0, 100.0);
+    clusterAreaSize = CGSizeMake(150.0, 150.0);
 
     [self setTileCache:[[[RMTileCache alloc] init] autorelease]];
     [self setTileSource:newTilesource];
@@ -258,6 +261,7 @@
         mapScrollView.frame = bounds;
         overlayView.frame = bounds;
         [self correctPositionOfAllAnnotations];
+        [self correctMinZoomScaleForBoundingMask];
     }
 }
 
@@ -427,7 +431,7 @@
         return YES;
     }
 
-    return [self projectedBounds:tileSourceProjectedBounds containsPoint:point];
+    return [self projectedBounds:_constrainingProjectedBounds containsPoint:point];
 }
 
 - (BOOL)tileSourceBoundsContainScreenPoint:(CGPoint)pixelCoordinate
@@ -449,9 +453,8 @@
 
 - (void)setProjectedConstraintsSouthWest:(RMProjectedPoint)southWest northEast:(RMProjectedPoint)northEast
 {
-    _southWestConstraint = southWest;
-    _northEastConstraint = northEast;
     _constrainMovement = YES;
+    _constrainingProjectedBounds = RMProjectedRectMake(southWest.x, southWest.y, northEast.x - southWest.x, northEast.y - southWest.y);
 }
 
 #pragma mark -
@@ -524,53 +527,6 @@
 
 - (void)moveBy:(CGSize)delta
 {
-    if (_constrainMovement)
-    {
-        // calculate new bounds after move
-        RMProjectedRect pBounds = [self projectedBounds];
-        RMProjectedSize XYDelta = [self viewSizeToProjectedSize:delta];
-        CGSize sizeRatio = CGSizeMake(((delta.width == 0) ? 0 : XYDelta.width / delta.width),
-                                      ((delta.height == 0) ? 0 : XYDelta.height / delta.height));
-        RMProjectedRect newBounds = pBounds;
-
-        // move the rect by delta
-        newBounds.origin.x -= XYDelta.width;
-        newBounds.origin.y -= XYDelta.height;
-
-        // see if new bounds are within constrained bounds, and constrain if necessary
-        BOOL constrained = NO;
-
-        if (newBounds.origin.y < _southWestConstraint.y)
-        {
-            newBounds.origin.y = _southWestConstraint.y;
-            constrained = YES;
-        }
-        if (newBounds.origin.y + newBounds.size.height > _northEastConstraint.y)
-        {
-            newBounds.origin.y = _northEastConstraint.y - newBounds.size.height;
-            constrained = YES;
-        }
-        if (newBounds.origin.x < _southWestConstraint.x)
-        {
-            newBounds.origin.x = _southWestConstraint.x;
-            constrained = YES;
-        }
-        if (newBounds.origin.x + newBounds.size.width > _northEastConstraint.x)
-        {
-            newBounds.origin.x = _northEastConstraint.x - newBounds.size.width;
-            constrained = YES;
-        }
-
-        if (constrained)
-        {
-            // Adjust delta to match constraint
-            XYDelta.height = pBounds.origin.y - newBounds.origin.y;
-            XYDelta.width = pBounds.origin.x - newBounds.origin.x;
-            delta = CGSizeMake(((sizeRatio.width == 0) ? 0 : XYDelta.width / sizeRatio.width),
-                               ((sizeRatio.height == 0) ? 0 : XYDelta.height / sizeRatio.height));
-        }
-    }
-
     if (_delegateHasBeforeMapMove)
         [delegate beforeMapMove:self];
 
@@ -585,6 +541,28 @@
 
 #pragma mark -
 #pragma mark Zoom
+
+- (void)setBoundingMask:(NSUInteger)mask
+{
+    boundingMask = mask;
+
+    [self correctMinZoomScaleForBoundingMask];
+}
+
+- (void)correctMinZoomScaleForBoundingMask
+{
+    if (self.boundingMask != RMMapNoMinBound)
+    {
+        CGFloat newMinZoomScale = (self.boundingMask == RMMapMinWidthBound ? self.bounds.size.width : self.bounds.size.height) / ((CATiledLayer *)tiledLayerView.layer).tileSize.width;
+
+        if (mapScrollView.minimumZoomScale > 0 && newMinZoomScale > mapScrollView.minimumZoomScale)
+        {
+            RMLog(@"clamping min zoom of %f to %f due to %@", log2f(mapScrollView.minimumZoomScale), log2f(newMinZoomScale), (self.boundingMask == RMMapMinWidthBound ? @"RMMapMinWidthBound" : @"RMMapMinHeightBound"));
+
+            mapScrollView.minimumZoomScale = newMinZoomScale;
+        }
+    }
+}
 
 - (RMProjectedRect)projectedBounds
 {
@@ -850,9 +828,9 @@
             zRect.size.width = screenBounds.size.width * self.metersPerPixel;
             zRect.size.height = screenBounds.size.height * self.metersPerPixel;
 
-            // can zoom only if within bounds
-            canZoom = !(zRect.origin.y < _southWestConstraint.y || zRect.origin.y+zRect.size.height > _northEastConstraint.y ||
-                        zRect.origin.x < _southWestConstraint.x || zRect.origin.x+zRect.size.width > _northEastConstraint.x);
+//            // can zoom only if within bounds
+//            canZoom = !(zRect.origin.y < _southWestConstraint.y || zRect.origin.y+zRect.size.height > _northEastConstraint.y ||
+//                        zRect.origin.x < _southWestConstraint.x || zRect.origin.x+zRect.size.width > _northEastConstraint.x);
         }
 
         if (!canZoom)
@@ -1184,7 +1162,7 @@
 
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(correctPositionOfAllAnnotations) object:nil];
 
-    if (_constrainMovement && ![self projectedBounds:tileSourceProjectedBounds containsPoint:[self centerProjectedPoint]])
+    if (_constrainMovement && ![self projectedBounds:_constrainingProjectedBounds containsPoint:[self centerProjectedPoint]])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             [mapScrollView setContentOffset:_lastContentOffset animated:NO];
@@ -1282,6 +1260,30 @@
 }
 
 #pragma mark -
+#pragma mark Snapshots
+
+- (UIImage *)takeSnapshotAndIncludeOverlay:(BOOL)includeOverlay
+{
+    overlayView.hidden = !includeOverlay;
+
+    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, [[UIScreen mainScreen] scale]);
+
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+
+    UIGraphicsEndImageContext();
+
+    overlayView.hidden = NO;
+
+    return image;
+}
+
+- (UIImage *)takeSnapshot
+{
+    return [self takeSnapshotAndIncludeOverlay:YES];
+}
+
+#pragma mark -
 #pragma mark Properties
 
 - (id <RMTileSource>)tileSource
@@ -1303,10 +1305,15 @@
 
     [mercatorToTileProjection release];
     mercatorToTileProjection = [[tileSource mercatorToTileProjection] retain];
-    tileSourceProjectedBounds = (RMProjectedRect)[self projectedRectFromLatitudeLongitudeBounds:[tileSource latitudeLongitudeBoundingBox]];
 
     RMSphericalTrapezium bounds = [tileSource latitudeLongitudeBoundingBox];
-    _constrainMovement = !(bounds.northEast.latitude == 90 && bounds.northEast.longitude == 180 && bounds.southWest.latitude == -90 && bounds.southWest.longitude == -180);
+
+    _constrainMovement = !(bounds.northEast.latitude == 90.0 && bounds.northEast.longitude == 180.0 && bounds.southWest.latitude == -90.0 && bounds.southWest.longitude == -180.0);
+
+    if (_constrainMovement)
+        _constrainingProjectedBounds = (RMProjectedRect)[self projectedRectFromLatitudeLongitudeBounds:bounds];
+    else
+        _constrainingProjectedBounds = projection.planetBounds;
 
     [self setMinZoom:newTileSource.minZoom];
     [self setMaxZoom:newTileSource.maxZoom];
@@ -1380,6 +1387,8 @@
 //    RMLog(@"New minZoom:%f", newMinZoom);
 
     mapScrollView.minimumZoomScale = exp2f(newMinZoom);
+
+    [self correctMinZoomScaleForBoundingMask];
 }
 
 - (void)setMaxZoom:(float)newMaxZoom
@@ -1445,7 +1454,15 @@
 
     adjustTilesForRetinaDisplay = doAdjustTilesForRetinaDisplay;
 
-    [self createMapView];
+    // Not so good: this replicates functionality from createMapView
+    int tileSideLength = [[self tileSource] tileSideLength];
+
+    if (adjustTilesForRetinaDisplay && screenScale > 1.0)
+        ((CATiledLayer *)tiledLayerView.layer).tileSize = CGSizeMake(tileSideLength * 2.0, tileSideLength * 2.0);
+    else
+        ((CATiledLayer *)tiledLayerView.layer).tileSize = CGSizeMake(tileSideLength, tileSideLength);
+
+    [self setCenterCoordinate:self.centerCoordinate animated:NO];
 }
 
 - (RMProjection *)projection
@@ -1498,6 +1515,16 @@
     return [projection projectedPointToCoordinate:[self pixelToProjectedPoint:pixelCoordinate]];
 }
 
+- (RMProjectedPoint)coordinateToProjectedPoint:(CLLocationCoordinate2D)coordinate
+{
+    return [projection coordinateToProjectedPoint:coordinate];
+}
+
+- (CLLocationCoordinate2D)projectedPointToCoordinate:(RMProjectedPoint)projectedPoint
+{
+    return [projection projectedPointToCoordinate:projectedPoint];
+}
+
 - (RMProjectedSize)viewSizeToProjectedSize:(CGSize)screenSize
 {
     return RMProjectedSizeMake(screenSize.width * self.metersPerPixel, screenSize.height * self.metersPerPixel);
@@ -1525,6 +1552,31 @@
 - (RMProjectedSize)projectedViewSize
 {
     return RMProjectedSizeMake(self.bounds.size.width * self.metersPerPixel, self.bounds.size.height * self.metersPerPixel);
+}
+
+- (CLLocationCoordinate2D)normalizeCoordinate:(CLLocationCoordinate2D)coordinate
+{
+	if (coordinate.longitude > 180.0)
+        coordinate.longitude -= 360.0;
+
+	coordinate.longitude /= 360.0;
+	coordinate.longitude += 0.5;
+	coordinate.latitude = 0.5 - ((log(tan((M_PI_4) + ((0.5 * M_PI * coordinate.latitude) / 180.0))) / M_PI) / 2.0);
+
+	return coordinate;
+}
+
+- (RMTile)tileWithCoordinate:(CLLocationCoordinate2D)coordinate andZoom:(int)tileZoom
+{
+	int scale = (1<<tileZoom);
+	CLLocationCoordinate2D normalizedCoordinate = [self normalizeCoordinate:coordinate];
+
+	RMTile returnTile;
+	returnTile.x = (int)(normalizedCoordinate.longitude * scale);
+	returnTile.y = (int)(normalizedCoordinate.latitude * scale);
+	returnTile.zoom = tileZoom;
+
+	return returnTile;
 }
 
 #pragma mark -
@@ -1632,7 +1684,8 @@
 
         NSArray *annotationsToCorrect = [quadTree annotationsInProjectedRect:boundingBox
                                                     createClusterAnnotations:self.enableClustering
-                                                             withClusterSize:RMProjectedSizeMake(self.clusterMarkerSize.width * self.metersPerPixel, self.clusterMarkerSize.height * self.metersPerPixel)
+                                                    withProjectedClusterSize:RMProjectedSizeMake(self.clusterAreaSize.width * self.metersPerPixel, self.clusterAreaSize.height * self.metersPerPixel)
+                                               andProjectedClusterMarkerSize:RMProjectedSizeMake(self.clusterMarkerSize.width * self.metersPerPixel, self.clusterMarkerSize.height * self.metersPerPixel)
                                                            findGravityCenter:self.positionClusterMarkersAtTheGravityCenter];
 
         NSMutableSet *previousVisibleAnnotations = [[NSMutableSet alloc] initWithSet:visibleAnnotations];

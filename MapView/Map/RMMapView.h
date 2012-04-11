@@ -84,7 +84,7 @@ typedef enum {
     NSMutableSet   *visibleAnnotations;
     RMQuadTree     *quadTree;
     BOOL            enableClustering, positionClusterMarkersAtTheGravityCenter;
-    CGSize          clusterMarkerSize;
+    CGSize          clusterMarkerSize, clusterAreaSize;
 
     id <RMTileSource> tileSource;
     RMTileCache *tileCache; // Generic tile cache
@@ -94,7 +94,6 @@ typedef enum {
     float screenScale;
 
     NSUInteger boundingMask;
-    RMProjectedRect tileSourceProjectedBounds;
 }
 
 @property (nonatomic, assign) id <RMMapViewDelegate> delegate;
@@ -126,6 +125,7 @@ typedef enum {
 @property (nonatomic, assign) BOOL enableClustering;
 @property (nonatomic, assign) BOOL positionClusterMarkersAtTheGravityCenter;
 @property (nonatomic, assign) CGSize clusterMarkerSize;
+@property (nonatomic, assign) CGSize clusterAreaSize;
 
 @property (nonatomic, readonly) RMProjection *projection;
 @property (nonatomic, readonly) id <RMMercatorToTileProjection> mercatorToTileProjection;
@@ -162,9 +162,6 @@ typedef enum {
 
 - (void)moveBy:(CGSize)delta;
 
-- (void)setConstraintsSouthWest:(CLLocationCoordinate2D)southWest northEeast:(CLLocationCoordinate2D)northEast;
-- (void)setProjectedConstraintsSouthWest:(RMProjectedPoint)southWest northEast:(RMProjectedPoint)northEast;
-
 #pragma mark -
 #pragma mark Zoom
 
@@ -192,8 +189,14 @@ typedef enum {
 - (RMProjectedPoint)pixelToProjectedPoint:(CGPoint)pixelCoordinate;
 - (CLLocationCoordinate2D)pixelToCoordinate:(CGPoint)pixelCoordinate;
 
+- (RMProjectedPoint)coordinateToProjectedPoint:(CLLocationCoordinate2D)coordinate;
+- (CLLocationCoordinate2D)projectedPointToCoordinate:(RMProjectedPoint)projectedPoint;
+
 - (RMProjectedSize)viewSizeToProjectedSize:(CGSize)screenSize;
 - (CGSize)projectedSizeToViewSize:(RMProjectedSize)projectedSize;
+
+- (CLLocationCoordinate2D)normalizeCoordinate:(CLLocationCoordinate2D)coordinate;
+- (RMTile)tileWithCoordinate:(CLLocationCoordinate2D)coordinate andZoom:(int)zoom;
 
 /// returns the smallest bounding box containing the entire view
 - (RMSphericalTrapezium)latitudeLongitudeBoundingBox;
@@ -205,6 +208,9 @@ typedef enum {
 
 - (BOOL)projectedBounds:(RMProjectedRect)bounds containsPoint:(RMProjectedPoint)point;
 - (BOOL)tileSourceBoundsContainProjectedPoint:(RMProjectedPoint)point;
+
+- (void)setConstraintsSouthWest:(CLLocationCoordinate2D)southWest northEeast:(CLLocationCoordinate2D)northEast;
+- (void)setProjectedConstraintsSouthWest:(RMProjectedPoint)southWest northEast:(RMProjectedPoint)northEast;
 
 #pragma mark -
 #pragma mark Annotations
@@ -225,5 +231,11 @@ typedef enum {
 
 ///  Clear all images from the #tileSource's caching system.
 -(void)removeAllCachedImages;
+
+#pragma mark -
+#pragma mark Snapshots
+
+- (UIImage *)takeSnapshot;
+- (UIImage *)takeSnapshotAndIncludeOverlay:(BOOL)includeOverlay;
 
 @end
