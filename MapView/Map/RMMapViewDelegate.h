@@ -81,3 +81,13 @@ typedef enum : NSUInteger {
 - (void)mapView:(RMMapView *)mapView didChangeUserTrackingMode:(RMUserTrackingMode)mode animated:(BOOL)animated;
 
 @end
+
+@protocol RMMarkerDisclosureButtonDelegate <NSObject>
+@required
+
+- (void)touchDownOnDisclosureButton;
+- (void)touchUpOnDisclosureButton;
+- (void)tapOnDisclosureButton;
+- (void)disclosureButtonTapped;
+
+@end
