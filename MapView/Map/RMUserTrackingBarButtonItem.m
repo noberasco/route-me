@@ -195,6 +195,15 @@ typedef enum {
             _state = (_mapView.userTrackingMode == RMUserTrackingModeFollowWithHeading ? RMUserTrackingButtonStateHeading : RMUserTrackingButtonStateLocation);
         }
     }
+
+    switch (_mapView.userTrackingMode) {
+        case RMUserTrackingModeNone:
+            self.tintColor = [UIColor blackColor];
+            break;
+        default:
+            self.tintColor = [UIColor blueColor];
+            break;
+    }
 }
 
 - (void)changeMode:(id)sender
