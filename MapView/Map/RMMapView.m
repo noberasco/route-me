@@ -1027,6 +1027,7 @@
     [singleTapRecognizer requireGestureRecognizerToFail:doubleTapRecognizer];
 
     UILongPressGestureRecognizer *longPressRecognizer = [[[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongPress:)] autorelease];
+    longPressRecognizer.minimumPressDuration = 0.2;
 
     [self addGestureRecognizer:singleTapRecognizer];
     [self addGestureRecognizer:doubleTapRecognizer];
@@ -1315,6 +1316,19 @@
     {
         [self tapOnLabelForAnnotation:[((RMMarker *)[superlayer superlayer]) annotation] atPoint:[recognizer locationInView:self]];
     }
+    else if ([[superlayer superlayer] superlayer] != nil && [[[superlayer superlayer] superlayer] isKindOfClass:[RMMarker class]])
+    {
+      [self tapOnLabelForAnnotation:[((RMMarker *)[[superlayer superlayer] superlayer]) annotation] atPoint:[recognizer locationInView:self]];
+    }
+    else if ([[[superlayer superlayer] superlayer] superlayer] != nil && [[[[superlayer superlayer] superlayer] superlayer] isKindOfClass:[RMMarker class]])
+    {
+      RMMarker *marker = ((RMMarker *)[[[superlayer superlayer] superlayer] superlayer]);
+      
+      if ([marker conformsToProtocol:@protocol(RMMarkerDisclosureButtonDelegate)])
+        [marker performSelector:@selector(disclosureButtonTapped)];
+      else
+        [self tapOnLabelForAnnotation:[marker annotation] atPoint:[recognizer locationInView:self]];
+    }
     else
     {
         [self singleTapAtPoint:[recognizer locationInView:self]];
@@ -1381,11 +1395,33 @@
 
 - (void)handleLongPress:(UILongPressGestureRecognizer *)recognizer
 {
-    if (recognizer.state != UIGestureRecognizerStateBegan)
-        return;
+  CALayer *hit        = [_overlayView.layer hitTest:[recognizer locationInView:_overlayView]];
+  CALayer *superlayer = [hit superlayer];
 
-    if (_delegateHasLongSingleTapOnMap)
-        [_delegate longSingleTapOnMap:self at:[recognizer locationInView:self]];
+  if ([[[superlayer superlayer] superlayer] superlayer] != nil && [[[[superlayer superlayer] superlayer] superlayer] isKindOfClass:[RMMarker class]])
+  {
+    RMMarker *marker = ((RMMarker *)[[[superlayer superlayer] superlayer] superlayer]);
+    
+    if ([marker conformsToProtocol:@protocol(RMMarkerDisclosureButtonDelegate)]) {
+      if (recognizer.state == UIGestureRecognizerStateBegan) {
+        [marker performSelector:@selector(touchDownOnDisclosureButton)];
+      }
+      else {
+        [marker performSelector:@selector(touchUpOnDisclosureButton)];
+        
+        if (recognizer.state == UIGestureRecognizerStateEnded)
+          [marker performSelector:@selector(tapOnDisclosureButton)];
+      }
+    }
+    
+    return;
+  }
+  
+  if (recognizer.state != UIGestureRecognizerStateBegan)
+    return;
+
+  if (_delegateHasLongSingleTapOnMap)
+    [_delegate longSingleTapOnMap:self at:[recognizer locationInView:self]];
 }
 
 // defines when the additional pan gesture recognizer on the scroll should handle the gesture
