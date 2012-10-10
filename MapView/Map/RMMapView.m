@@ -2254,6 +2254,8 @@
                 [self correctScreenPosition:annotation animated:animated];
 
 //            RMLog(@"%d annotations corrected", [visibleAnnotations count]);
+          
+            [self setLayeringOfAllAnnotations];
 
             [CATransaction commit];
 
@@ -2372,7 +2374,54 @@
         }
     }
 
+    [self setLayeringOfAllAnnotations];
+
     [CATransaction commit];
+}
+
+- (void)setLayeringOfAllAnnotations
+{
+  NSMutableSet *groupUserLocation   = [NSMutableSet set];
+  NSMutableSet *groupPolylines      = [NSMutableSet set];
+  NSMutableSet *groupMarkers        = [NSMutableSet set];
+  NSMutableSet *groupMarkerCallouts = [NSMutableSet set];
+  NSMutableSet *groupOther          = [NSMutableSet set];
+  
+  for (RMAnnotation *annotation in _visibleAnnotations) {
+    if ([annotation.annotationType isEqualToString:kRMUserLocationAnnotationTypeName]   ||
+        [annotation.annotationType isEqualToString:kRMTrackingHaloAnnotationTypeName]   ||
+        [annotation.annotationType isEqualToString:kRMAccuracyCircleAnnotationTypeName] ||
+        annotation.isUserLocationAnnotation == YES)
+      [groupUserLocation addObject:annotation];
+    else if ([annotation.layer isKindOfClass:[RMShape class]])
+      [groupPolylines addObject:annotation];
+    else if ([annotation.layer isKindOfClass:[RMMarker class]]) {
+      if ([annotation.layer conformsToProtocol:@protocol(RMMarkerDisclosureButtonDelegate)])
+        [groupMarkerCallouts addObject:annotation];
+      else
+        [groupMarkers addObject:annotation];
+    }
+    else {
+      [groupOther addObject:annotation];
+    }
+    
+    [annotation.layer removeFromSuperlayer];
+  }
+  
+  for (RMAnnotation *annotation in groupOther)
+    [_overlayView addSublayer:annotation.layer];
+  
+  for (RMAnnotation *annotation in groupPolylines)
+    [_overlayView addSublayer:annotation.layer];
+  
+  for (RMAnnotation *annotation in groupUserLocation)
+    [_overlayView addSublayer:annotation.layer];
+  
+  for (RMAnnotation *annotation in groupMarkers)
+    [_overlayView addSublayer:annotation.layer];
+  
+  for (RMAnnotation *annotation in groupMarkerCallouts)
+    [_overlayView addSublayer:annotation.layer];
 }
 
 - (void)correctPositionOfAllAnnotations
@@ -2415,6 +2464,8 @@
             [_visibleAnnotations addObject:annotation];
         }
     }
+
+    [self setLayeringOfAllAnnotations];
 }
 
 - (void)addAnnotations:(NSArray *)newAnnotations
