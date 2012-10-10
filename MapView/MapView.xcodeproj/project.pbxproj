@@ -85,6 +85,8 @@
 		B8F3FC650EA2E792004D8F85 /* RMMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F3FC630EA2E792004D8F85 /* RMMarker.m */; };
 		D1437B36122869E400888DAE /* RMDBMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D1437B32122869E400888DAE /* RMDBMapSource.m */; };
 		D1437B37122869E400888DAE /* RMDBMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D1437B33122869E400888DAE /* RMDBMapSource.h */; };
+		D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */; };
+		D91243421625D0FF0072884C /* RMOpenCycleMapLandscapeSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */; };
 		DD2B374514CF8041008DE8CB /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B373F14CF8041008DE8CB /* FMDatabase.h */; };
 		DD2B374614CF8041008DE8CB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374014CF8041008DE8CB /* FMDatabase.m */; };
 		DD2B374714CF8041008DE8CB /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B374114CF8041008DE8CB /* FMDatabaseAdditions.h */; };
@@ -213,6 +215,8 @@
 		B8F3FC630EA2E792004D8F85 /* RMMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMarker.m; sourceTree = "<group>"; };
 		D1437B32122869E400888DAE /* RMDBMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDBMapSource.m; sourceTree = "<group>"; };
 		D1437B33122869E400888DAE /* RMDBMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDBMapSource.h; sourceTree = "<group>"; };
+		D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapLandscapeSource.h; sourceTree = "<group>"; };
+		D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapLandscapeSource.m; sourceTree = "<group>"; };
 		DD2B373F14CF8041008DE8CB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		DD2B374014CF8041008DE8CB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		DD2B374114CF8041008DE8CB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 				DD8CDB4914E0507100B73EB9 /* RMMapQuestOSMSource.m */,
 				1606C9FC13D86BA300547581 /* RMOpenCycleMapSource.h */,
 				1606C9FD13D86BA300547581 /* RMOpenCycleMapSource.m */,
+				D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */,
+				D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */,
 				16128CF3148D295300C23C0E /* RMOpenSeaMapSource.h */,
 				16128CF4148D295300C23C0E /* RMOpenSeaMapSource.m */,
 				161E56381594664E00B00BB6 /* RMOpenSeaMapLayer.h */,
@@ -582,6 +588,7 @@
 				16FBF07615936BF1004ECAD1 /* RMTileSourcesContainer.h in Headers */,
 				161E563A1594664E00B00BB6 /* RMOpenSeaMapLayer.h in Headers */,
 				1656665515A1DF7900EF3DC7 /* RMCoordinateGridSource.h in Headers */,
+				D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +702,7 @@
 				16FBF07715936BF1004ECAD1 /* RMTileSourcesContainer.m in Sources */,
 				161E563B1594664E00B00BB6 /* RMOpenSeaMapLayer.m in Sources */,
 				1656665615A1DF7900EF3DC7 /* RMCoordinateGridSource.m in Sources */,
+				D91243421625D0FF0072884C /* RMOpenCycleMapLandscapeSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

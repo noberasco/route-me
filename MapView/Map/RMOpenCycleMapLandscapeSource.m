@@ -1,6 +1,6 @@
 //
-// RouteMe.h
-// 
+//  OpenCycleMapSource.m
+//
 // Copyright (c) 2008-2012, Route-Me Contributors
 // All rights reserved.
 //
@@ -25,48 +25,53 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// The list of header files for more convenient Route-Me import to projects.
-// (in alphabetic order)
-
-#import "NSUserDefaults+RouteMe.h"
-#import "RMAbstractMercatorTileSource.h"
-#import "RMAbstractWebMapSource.h"
-#import "RMAnnotation.h"
-#import "RMCacheObject.h"
-#import "RMCircle.h"
-#import "RMConfiguration.h"
-#import "RMCoordinateGridSource.h"
-#import "RMDBMapSource.h"
-#import "RMDatabaseCache.h"
-#import "RMFoundation.h"
-#import "RMFractalTileProjection.h"
-#import "RMGenericMapSource.h"
-#import "RMGlobalConstants.h"
-#import "RMMapLayer.h"
-#import "RMMapOverlayView.h"
-#import "RMMapQuestOSMSource.h"
-#import "RMMapQuestOpenAerialSource.h"
-#import "RMMapScrollView.h"
-#import "RMMapTiledLayerView.h"
-#import "RMMapView.h"
-#import "RMMapViewDelegate.h"
-#import "RMMarker.h"
-#import "RMMemoryCache.h"
-#import "RMNotifications.h"
-#import "RMOpenCycleMapSource.h"
 #import "RMOpenCycleMapLandscapeSource.h"
-#import "RMOpenSeaMapLayer.h"
-#import "RMOpenSeaMapSource.h"
-#import "RMOpenStreetMapSource.h"
-#import "RMPath.h"
-#import "RMPixel.h"
-#import "RMProjection.h"
-#import "RMQuadTree.h"
-#import "RMShape.h"
-#import "RMTile.h"
-#import "RMTileCache.h"
-#import "RMTileImage.h"
-#import "RMTileSource.h"
-#import "RMTileSourcesContainer.h"
-#import "RMUserLocation.h"
-#import "RMUserTrackingBarButtonItem.h"
+
+@implementation RMOpenCycleMapLandscapeSource
+
+- (id)init
+{
+	if (!(self = [super init]))
+        return nil;
+
+    self.minZoom = 1;
+    self.maxZoom = 15;
+
+	return self;
+} 
+
+- (NSURL *)URLForTile:(RMTile)tile
+{
+	NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
+			  self, tile.zoom, self.minZoom, self.maxZoom);
+
+	return [NSURL URLWithString:[NSString stringWithFormat:@"http://tile3.opencyclemap.org/landscape/%d/%d/%d.png", tile.zoom, tile.x, tile.y]];
+}
+
+- (NSString *)uniqueTilecacheKey
+{
+	return @"OpenCycleMapLandscape";
+}
+
+- (NSString *)shortName
+{
+	return @"Open Cycle Map Landscape";
+}
+
+- (NSString *)longDescription
+{
+	return @"The world is full of interesting features beyond roads and houses. The landscape layer emphasises natural features and is a perfect display for those interested in nature, the countryside, and life beyond the city.";
+}
+
+- (NSString *)shortAttribution
+{
+	return @"© OpenCycleMap CC-BY-SA";
+}
+
+- (NSString *)longAttribution
+{
+	return @"Map data © OpenCycleMap, licensed under Creative Commons Share Alike By Attribution.";
+}
+
+@end
