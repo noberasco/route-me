@@ -2766,27 +2766,7 @@
 
     if (self.userTrackingMode != RMUserTrackingModeNone)
     {
-        // zoom centered on user location unless we're already centered there (or very close)
-        //
-        CGPoint mapCenterPoint    = [self convertPoint:self.center fromView:self.superview];
-        CGPoint userLocationPoint = [self mapPositionForAnnotation:_userLocation];
-
-        if (fabsf(userLocationPoint.x - mapCenterPoint.x) > 2 || fabsf(userLocationPoint.y - mapCenterPoint.y > 2))
-        {
-            float delta = newLocation.horizontalAccuracy / 110000; // approx. meter per degree latitude
-
-            CLLocationCoordinate2D southWest = CLLocationCoordinate2DMake(newLocation.coordinate.latitude  - delta, 
-                                                                          newLocation.coordinate.longitude - delta);
-            
-            CLLocationCoordinate2D northEast = CLLocationCoordinate2DMake(newLocation.coordinate.latitude  + delta, 
-                                                                          newLocation.coordinate.longitude + delta);
-
-            if (northEast.latitude  != [self latitudeLongitudeBoundingBox].northEast.latitude  ||
-                northEast.longitude != [self latitudeLongitudeBoundingBox].northEast.longitude ||
-                southWest.latitude  != [self latitudeLongitudeBoundingBox].southWest.latitude  ||
-                southWest.longitude != [self latitudeLongitudeBoundingBox].southWest.longitude)
-                [self zoomWithLatitudeLongitudeBoundsSouthWest:southWest northEast:northEast animated:YES];
-        }
+      [self setCenterCoordinate:newLocation.coordinate animated:YES];
     }
 
     RMAnnotation *accuracyCircleAnnotation = nil;
