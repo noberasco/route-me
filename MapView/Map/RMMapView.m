@@ -2381,11 +2381,11 @@
 
 - (void)setLayeringOfAllAnnotations
 {
-  NSMutableSet *groupUserLocation   = [NSMutableSet set];
-  NSMutableSet *groupPolylines      = [NSMutableSet set];
-  NSMutableSet *groupMarkers        = [NSMutableSet set];
-  NSMutableSet *groupMarkerCallouts = [NSMutableSet set];
-  NSMutableSet *groupOther          = [NSMutableSet set];
+  NSMutableSet   *groupUserLocation   = [NSMutableSet   set];
+  NSMutableSet   *groupPolylines      = [NSMutableSet   set];
+  NSMutableArray *groupMarkers        = [NSMutableArray array];
+  NSMutableSet   *groupMarkerCallouts = [NSMutableSet   set];
+  NSMutableSet   *groupOther          = [NSMutableSet   set];
   
   for (RMAnnotation *annotation in _visibleAnnotations) {
     if ([annotation.annotationType isEqualToString:kRMUserLocationAnnotationTypeName]   ||
@@ -2407,6 +2407,22 @@
     
     [annotation.layer removeFromSuperlayer];
   }
+  
+  [groupMarkers sortUsingComparator:(NSComparator)^(RMAnnotation *obj1, RMAnnotation *obj2){
+    if (obj1.coordinate.latitude < obj2.coordinate.latitude)
+      return NSOrderedDescending;
+    
+    if (obj1.coordinate.latitude > obj2.coordinate.latitude)
+      return NSOrderedAscending;
+    
+    if (obj1.coordinate.longitude < obj2.coordinate.longitude)
+      return NSOrderedDescending;
+    
+    if (obj1.coordinate.longitude > obj2.coordinate.longitude)
+      return NSOrderedAscending;
+    
+    return NSOrderedSame;
+  }];
   
   for (RMAnnotation *annotation in groupOther)
     [_overlayView addSublayer:annotation.layer];
