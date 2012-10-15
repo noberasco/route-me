@@ -56,7 +56,7 @@
 
 - (NSString *)shortName
 {
-	return @"MapQuest";
+	return @"MapQuest-OSM";
 }
 
 - (NSString *)longDescription
