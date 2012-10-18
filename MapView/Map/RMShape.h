@@ -73,6 +73,7 @@
 - (void)addLineToProjectedPoint:(RMProjectedPoint)projectedPoint;
 - (void)addLineToScreenPoint:(CGPoint)point;
 - (void)addLineToCoordinate:(CLLocationCoordinate2D)coordinate;
+- (void)addPolylineForCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count;
 
 // Change the path without recalculating the geometry (performance!)
 - (void)performBatchOperations:(void (^)(RMShape *aPath))block;

@@ -82,7 +82,7 @@
 - (id)initWithMapView:(RMMapView *)aMapView coordinate:(CLLocationCoordinate2D)aCoordinate andTitle:(NSString *)aTitle;
 
 - (void)setBoundingBoxCoordinatesSouthWest:(CLLocationCoordinate2D)southWest northEast:(CLLocationCoordinate2D)northEast;
-- (void)setBoundingBoxFromLocations:(NSArray *)locations;
+- (void)setBoundingBoxFromLocations:(CLLocationCoordinate2D *)locations count:(NSUInteger)count;
 
 #pragma mark -
 

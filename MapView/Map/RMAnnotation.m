@@ -196,7 +196,7 @@
     self.hasBoundingBox = YES;
 }
 
-- (void)setBoundingBoxFromLocations:(NSArray *)locations
+- (void)setBoundingBoxFromLocations:(CLLocationCoordinate2D *)locations count:(NSUInteger)count
 {
     CLLocationCoordinate2D min, max;
 	min.latitude = kRMMaxLatitude; min.longitude = kRMMaxLongitude;
@@ -204,10 +204,10 @@
 
     CLLocationDegrees currentLatitude, currentLongitude;
 
-	for (CLLocation *currentLocation in locations)
+  for (NSUInteger i=0; i<count; i++)
     {
-        currentLatitude = currentLocation.coordinate.latitude;
-        currentLongitude = currentLocation.coordinate.longitude;
+        currentLatitude = locations[i].latitude;
+        currentLongitude = locations[i].longitude;
 
         // POIs outside of the world...
         if (currentLatitude < kRMMinLatitude || currentLatitude > kRMMaxLatitude || currentLongitude < kRMMinLongitude || currentLongitude > kRMMaxLongitude)

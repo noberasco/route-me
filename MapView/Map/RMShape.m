@@ -339,6 +339,14 @@
     [self addLineToProjectedPoint:mercator];
 }
 
+- (void)addPolylineForCoordinates:(CLLocationCoordinate2D *)coordinates count:(NSUInteger)count {
+  for (NSUInteger i=0; i<count; i++) {
+    [self addLineToCoordinate:coordinates[i]];
+  }
+  
+  [self.annotation setBoundingBoxFromLocations:coordinates count:count];
+}
+
 - (void)performBatchOperations:(void (^)(RMShape *aPath))block
 {
     ignorePathUpdates = YES;

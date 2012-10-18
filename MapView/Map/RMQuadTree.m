@@ -268,29 +268,7 @@
 
         annotation.quadTreeNode = self;
 
-        if ([_annotations count] <= kMaxAnnotationsPerLeaf || _boundingBox.size.width < (kMinimumQuadTreeElementWidth * 2.0))
-        {
-            [self removeUpwardsAllCachedClusterAnnotations];
-            return;
-        }
-
-        _nodeType = nodeTypeNode;
-
-        // problem: all annotations that cross two quadrants will always be re-added here, which
-        // might be a problem depending on kMaxAnnotationsPerLeaf
-
-        NSArray *immutableAnnotations = nil;
-
-        @synchronized (_annotations)
-        {
-            immutableAnnotations = [NSArray arrayWithArray:_annotations];
-            [_annotations removeAllObjects];
-        }
-
-        for (RMAnnotation *annotationToMove in immutableAnnotations)
-        {
-            [self addAnnotationToChildNodes:annotationToMove];
-        }
+        [self removeUpwardsAllCachedClusterAnnotations];
 
         return;
     }
