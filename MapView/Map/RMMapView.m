@@ -2566,6 +2566,9 @@
         }
         case RMUserTrackingModeFollow:
         {
+            if (_mapScrollView.isDecelerating)
+                [_mapScrollView setContentOffset:_mapScrollView.contentOffset animated:NO];
+          
             self.showsUserLocation = YES;
 
             [_locationManager stopUpdatingHeading];
