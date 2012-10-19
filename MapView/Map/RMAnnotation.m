@@ -32,7 +32,6 @@
 #import "RMAnnotation.h"
 #import "RMMapView.h"
 #import "RMMapLayer.h"
-#import "RMQuadTree.h"
 
 @implementation RMAnnotation
 
@@ -49,7 +48,6 @@
 @synthesize hasBoundingBox;
 @synthesize enabled, clusteringEnabled;
 @synthesize position;
-@synthesize quadTreeNode;
 @synthesize isUserLocationAnnotation;
 
 + (id)annotationWithMapView:(RMMapView *)aMapView coordinate:(CLLocationCoordinate2D)aCoordinate andTitle:(NSString *)aTitle
@@ -66,7 +64,6 @@
     self.coordinate   = aCoordinate;
     self.title        = aTitle;
     self.userInfo     = nil;
-    self.quadTreeNode = nil;
 
     self.annotationType    = nil;
     self.annotationIcon    = nil;
@@ -88,8 +85,6 @@
     self.title        = nil;
     self.userInfo     = nil;
     self.layer        = nil;
-    [[self.mapView quadTree] removeAnnotation:self];
-    self.quadTreeNode = nil;
     self.mapView      = nil;
 
     self.annotationType = nil;
@@ -107,8 +102,6 @@
 
     if (!self.hasBoundingBox)
         self.projectedBoundingBox = RMProjectedRectMake(self.projectedLocation.x, self.projectedLocation.y, 1.0, 1.0);
-
-    [self.quadTreeNode performSelector:@selector(annotationDidChangeBoundingBox:) withObject:self];
 }
 
 - (void)setMapView:(RMMapView *)aMapView

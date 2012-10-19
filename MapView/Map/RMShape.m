@@ -343,8 +343,6 @@
   for (NSUInteger i=0; i<count; i++) {
     [self addLineToCoordinate:coordinates[i]];
   }
-  
-  [self.annotation setBoundingBoxFromLocations:coordinates count:count];
 }
 
 - (void)performBatchOperations:(void (^)(RMShape *aPath))block

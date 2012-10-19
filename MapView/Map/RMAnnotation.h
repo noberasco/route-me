@@ -28,7 +28,7 @@
 
 #import "RMFoundation.h"
 
-@class RMMapView, RMMapLayer, RMQuadTreeNode;
+@class RMMapView, RMMapLayer;
 
 @interface RMAnnotation : NSObject
 {
@@ -42,7 +42,6 @@
     BOOL enabled, clusteringEnabled;
 
     RMMapLayer *layer;
-    RMQuadTreeNode *quadTreeNode;
 
     // provided for storage of arbitrary user data
     id userInfo;
@@ -69,9 +68,6 @@
 
 // RMMarker, RMPath, whatever you return in your delegate method mapView:layerForAnnotation:
 @property (nonatomic, retain) RMMapLayer *layer;
-
-// This is for the QuadTree. Don't mess this up.
-@property (nonatomic, assign) RMQuadTreeNode *quadTreeNode;
 
 // This is for filtering framework-provided annotations.
 @property (nonatomic, readonly) BOOL isUserLocationAnnotation;

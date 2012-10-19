@@ -50,7 +50,6 @@
 @class RMMapScrollView;
 @class RMMarker;
 @class RMAnnotation;
-@class RMQuadTree;
 @class RMUserLocation;
 
 
@@ -184,13 +183,6 @@ typedef enum : NSUInteger {
 - (CGPoint)mapPositionForAnnotation:(RMAnnotation *)annotation;
 
 #pragma mark - TileSources
-
-@property (nonatomic, retain) RMQuadTree *quadTree;
-
-@property (nonatomic, assign) BOOL enableClustering;
-@property (nonatomic, assign) BOOL positionClusterMarkersAtTheGravityCenter;
-@property (nonatomic, assign) CGSize clusterMarkerSize;
-@property (nonatomic, assign) CGSize clusterAreaSize;
 
 @property (nonatomic, retain)   RMTileCache *tileCache;
 @property (nonatomic, readonly) RMTileSourcesContainer *tileSourcesContainer;
