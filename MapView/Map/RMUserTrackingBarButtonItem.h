@@ -14,6 +14,6 @@
 
 - (id)initWithMapView:(RMMapView *)mapView;
 
-@property (nonatomic, retain) RMMapView *mapView;
+@property (nonatomic, readonly) RMMapView *mapView;
 
 @end
