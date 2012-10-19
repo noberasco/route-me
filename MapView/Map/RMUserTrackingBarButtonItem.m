@@ -38,11 +38,11 @@ typedef enum {
   
     _mapView = [mapView retain];
   
-    [self updateAppearance];
-    
     [_mapView addObserver:self forKeyPath:@"userTrackingMode"      options:NSKeyValueObservingOptionNew context:nil];
     [_mapView addObserver:self forKeyPath:@"userLocation.location" options:NSKeyValueObservingOptionNew context:nil];
 
+    [self performSelector:@selector(updateAppearance) withObject:nil afterDelay:0.25];
+  
     return self;
 }
 
