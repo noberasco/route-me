@@ -25,7 +25,9 @@ typedef enum {
 
 #pragma mark -
 
-@implementation RMUserTrackingBarButtonItem
+@implementation RMUserTrackingBarButtonItem {
+  NSTimer *_timer;
+}
 
 @synthesize mapView = _mapView;
 
@@ -37,17 +39,17 @@ typedef enum {
         return nil;
   
     _mapView = [mapView retain];
+    _timer   = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(updateAppearance) userInfo:nil repeats:YES];
   
     [_mapView addObserver:self forKeyPath:@"userTrackingMode"      options:NSKeyValueObservingOptionNew context:nil];
     [_mapView addObserver:self forKeyPath:@"userLocation.location" options:NSKeyValueObservingOptionNew context:nil];
-
-    [self performSelector:@selector(updateAppearance) withObject:nil afterDelay:0.25];
   
-    return self;
+    return [self autorelease]; //NSTimer retained us
 }
 
 - (void)dealloc
 {
+    [_timer invalidate];
     [_mapView removeObserver:self forKeyPath:@"userTrackingMode"];
     [_mapView removeObserver:self forKeyPath:@"userLocation.location"];
     [_mapView release]; _mapView = nil;
