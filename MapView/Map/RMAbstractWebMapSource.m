@@ -141,7 +141,7 @@
             }
         }
     }
-    else
+    else if (URLs.count == 1)
     {
         for (NSUInteger try = 0; image == nil && try < self.retryCount; ++try)
         {
@@ -153,6 +153,10 @@
             if (response.statusCode == HTTP_404_NOT_FOUND)
                 break;
         }
+    }
+    else
+    {
+      RMLog(@"ERROR: no URLs for tile");
     }
 
     if (image)

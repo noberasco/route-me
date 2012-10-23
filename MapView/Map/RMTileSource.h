@@ -58,7 +58,8 @@
 @property (nonatomic, readonly) NSString *longDescription;
 @property (nonatomic, readonly) NSString *shortAttribution;
 @property (nonatomic, readonly) NSString *longAttribution;
-@property (nonatomic, retain)   NSString *attributionImage;
+@property (nonatomic, retain)   NSString *attributionImageName;
+@property (nonatomic, retain)   NSString *attributionImageURL;
 
 #pragma mark -
 

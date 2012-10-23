@@ -33,10 +33,11 @@
 @implementation RMAbstractMercatorTileSource
 {
     RMFractalTileProjection *_tileProjection;
-    NSString *_attributionImage;
+    NSString *_attributionImageName;
+    NSString *_attributionImageURL;
 }
 
-@synthesize minZoom = _minZoom, maxZoom = _maxZoom, attributionImage = _attributionImage;
+@synthesize minZoom = _minZoom, maxZoom = _maxZoom, attributionImageName = _attributionImageName, attributionImageURL = _attributionImageURL;
 
 - (id)init
 {
@@ -54,8 +55,9 @@
 
 - (void)dealloc
 {
-    [_tileProjection   release]; _tileProjection   = nil;
-    [_attributionImage release]; _attributionImage = nil;
+    [_tileProjection release]; _tileProjection = nil;
+    [_attributionImageName release]; _attributionImageName = nil;
+    [_attributionImageURL release]; _attributionImageURL = nil;
     [super dealloc];
 }
 
