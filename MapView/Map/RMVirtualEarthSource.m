@@ -205,7 +205,7 @@ id (*decodeJSONData)(id self, SEL _cmd, NSData *data, NSUInteger opt, NSError **
           }
         }
         
-        RMLog(@"AUTH DATA: %@", dict);
+//        RMLog(@"AUTH DATA: %@", dict);
         
         if (dict != nil) {
           BOOL authenticated = [[dict objectForKey:@"authenticationResultCode"] isEqualToString:@"ValidCredentials"];
