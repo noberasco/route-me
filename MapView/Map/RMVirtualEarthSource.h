@@ -38,4 +38,6 @@ typedef enum {
 
 - (id)initWithMapType:(RMVirtualEarthMapType)mapType usingAccessKey:(NSString *)developerAccessKey;
 
+@property(nonatomic, readonly, retain) NSArray *imageryProviders;
+
 @end

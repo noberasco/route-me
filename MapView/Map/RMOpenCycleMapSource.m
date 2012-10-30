@@ -74,4 +74,9 @@
 	return @"Map data © OpenCycleMap, licensed under Creative Commons Share Alike By Attribution.";
 }
 
+- (NSString *)copyrightURL
+{
+  return @"http://www.opencyclemap.org";
+}
+
 @end

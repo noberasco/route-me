@@ -49,9 +49,10 @@ static NSMutableDictionary *authDataContainer = nil;
 - (NSString *)mapSubDomainParameter;
 - (NSString *)mapCultureParameter;
 
-@property(nonatomic, retain) NSString   *urlTemplate;
-@property(nonatomic, retain) NSArray    *urlSubDomains;
-@property(nonatomic, assign) AuthStatus  authStatus;
+@property(nonatomic, retain)            NSString   *urlTemplate;
+@property(nonatomic, retain)            NSArray    *urlSubDomains;
+@property(nonatomic, assign)            AuthStatus  authStatus;
+@property(nonatomic, readwrite, retain) NSArray    *imageryProviders;
 
 @end
 
@@ -65,6 +66,7 @@ static NSMutableDictionary *authDataContainer = nil;
   NSArray               *urlSubDomains;
   NSUInteger             urlSubDomainIndex;
   NSString              *culture;
+  NSArray               *imageryProviders;
 }
 
 #pragma mark -
@@ -88,6 +90,7 @@ static NSMutableDictionary *authDataContainer = nil;
     urlSubDomains       = nil;
     urlSubDomainIndex   = 0;
     culture             = nil;
+    imageryProviders    = nil;
     
     //default URL for attribution image (will be overridden when auth data is received)
     self.attributionImageURL = @"http://dev.virtualearth.net/Branding/logo_powered_by.png";
@@ -111,6 +114,7 @@ static NSMutableDictionary *authDataContainer = nil;
   [urlTemplate         release];
   [urlSubDomains       release];
   [culture             release];
+  [imageryProviders    release];
   
   [super dealloc];
 }
@@ -121,6 +125,7 @@ static NSMutableDictionary *authDataContainer = nil;
 @synthesize urlTemplate;
 @synthesize urlSubDomains;
 @synthesize authStatus;
+@synthesize imageryProviders;
 
 #pragma mark -
 #pragma mark RMAbstractWebMapSource methods implementation
@@ -169,6 +174,11 @@ static NSMutableDictionary *authDataContainer = nil;
 	return @"Map data © Microsoft Virtual Earth.";
 }
 
+- (NSString *)copyrightURL
+{
+  return @"";
+}
+
 #pragma mark -
 #pragma mark map server authentication management
                         
@@ -176,10 +186,12 @@ static NSMutableDictionary *authDataContainer = nil;
   [authStatusCondition lock];
   
   if (authData != nil) {
-    NSArray      *resourceSets = [authData objectForKey:@"resourceSets"];
-    NSDictionary *resourceSet  = [resourceSets lastObject];
-    NSArray      *resources    = [resourceSet objectForKey:@"resources"];
-    NSDictionary *resourceData = [resources lastObject];
+    NSArray        *resourceSets = [authData objectForKey:@"resourceSets"];
+    NSDictionary   *resourceSet  = [resourceSets lastObject];
+    NSArray        *resources    = [resourceSet objectForKey:@"resources"];
+    NSDictionary   *resourceData = [resources lastObject];
+    NSArray        *rawProviders = [resourceData objectForKey:@"imageryProviders"];
+    NSMutableArray *providers    = [NSMutableArray array];
     
     if (resourceSets.count != 1) {
       RMLog(@"Expected 1 resource sets, got %d (%@)", resourceSets.count, authData);
@@ -189,11 +201,15 @@ static NSMutableDictionary *authDataContainer = nil;
       RMLog(@"Expected 1 resources, got %d (%@)", resources.count, authData);
     }
     
+    for (NSDictionary *providerData in rawProviders)
+      [providers addObject:[providerData objectForKey:@"attribution"]];
+    
     self.minZoom             = [[resourceData objectForKey:@"zoomMin"] integerValue];
     self.maxZoom             = [[resourceData objectForKey:@"zoomMax"] integerValue];
     self.attributionImageURL = [authData objectForKey:@"brandLogoUri"];
     self.urlTemplate         = [resourceData objectForKey:@"imageUrl"];
     self.urlSubDomains       = [resourceData objectForKey:@"imageUrlSubdomains"];
+    self.imageryProviders    = providers;
     self.authStatus          = kAuthStatusAuthenticated;
     
     [authStatusCondition signal];
@@ -210,7 +226,7 @@ static NSMutableDictionary *authDataContainer = nil;
 - (void)requestAuthDataFromVirtualEarthServer {
   NSError      *error       = nil;
   NSString     *authDataKey = kAuthDataKey;
-  NSString     *urlStr      = [NSString stringWithFormat:@"https://dev.virtualearth.net/REST/v1/Imagery/Metadata/%@?key=%@", authDataKey, accessKey];
+  NSString     *urlStr      = [NSString stringWithFormat:@"https://dev.virtualearth.net/REST/v1/Imagery/Metadata/%@?key=%@&include=ImageryProviders", authDataKey, accessKey];
   NSURL        *url         = [NSURL URLWithString:urlStr];
   NSData       *data        = [NSData dataWithContentsOfURL:url options:NSDataReadingUncached error:&error];
   NSDictionary *authData    = nil;
@@ -297,8 +313,6 @@ static NSMutableDictionary *authDataContainer = nil;
 
 - (void)authenticateWithVirtualEarthServer {
   @autoreleasepool {
-    [self retain];
-    
     NSDictionary *authData    = nil;
     NSString     *authDataKey = kAuthDataKey;
     
@@ -349,8 +363,6 @@ static NSMutableDictionary *authDataContainer = nil;
         [self requestAuthDataFromVirtualEarthServer];
       }
     }
-    
-    [self release];
   }
 }
 

@@ -66,12 +66,17 @@
 
 - (NSString *)shortAttribution
 {
-	return @"© OpenStreetMap CC-BY-SA";
+	return @"© OpenStreetMap contributors";
 }
 
 - (NSString *)longAttribution
 {
 	return @"Map data © OpenStreetMap, licensed under Creative Commons Share Alike By Attribution.";
+}
+
+- (NSString *)copyrightURL
+{
+  return @"http://www.openstreetmap.org/copyright";
 }
 
 @end

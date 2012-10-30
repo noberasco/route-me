@@ -138,5 +138,12 @@
 	return [self shortAttribution];
 }
 
+- (NSString *)copyrightURL
+{
+  @throw [NSException exceptionWithName:@"RMAbstractMethodInvocation"
+                                 reason:@"copyrightURL invoked on RMAbstractMercatorTileSource. Override this method when instantiating an abstract class."
+                               userInfo:nil];
+}
+
 @end
 
