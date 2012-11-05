@@ -24,3 +24,5 @@
 #define NS_BLOCK_ASSERTIONS 1
 #endif
 
+#define TOTAL_RAM (NSInteger)([[NSProcessInfo processInfo] physicalMemory] / 1024 / 1024)
+#define LOW_MEMORY_DEVICE (TOTAL_RAM < 200)

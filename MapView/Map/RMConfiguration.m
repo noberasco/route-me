@@ -38,7 +38,10 @@ static RMConfiguration *RMConfigurationSharedInstance = nil;
 {
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+      if (LOW_MEMORY_DEVICE)
         RMConfigurationSharedInstance = [[RMConfiguration alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"routeme" ofType:@"plist"]];
+      else
+        RMConfigurationSharedInstance = [[RMConfiguration alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"routeme-lowmem" ofType:@"plist"]];
     });
 
     return RMConfigurationSharedInstance;
