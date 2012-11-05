@@ -1108,7 +1108,12 @@
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    if (self.userTrackingMode != RMUserTrackingModeNone && scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateChanged)
+    BOOL stateChanged = YES;
+    
+    if ([scrollView respondsToSelector:@selector(pinchGestureRecognizer)])
+      stateChanged = (scrollView.pinchGestureRecognizer.state == UIGestureRecognizerStateChanged);
+  
+    if (self.userTrackingMode != RMUserTrackingModeNone && stateChanged)
         self.userTrackingMode = RMUserTrackingModeNone;
     
     [self correctPositionOfAllAnnotations];
