@@ -2824,15 +2824,18 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
   if (_locationManager != nil) {
-    [_locationManager stopUpdatingLocation];
-    [_locationManager stopUpdatingHeading];
+    [_locationManager release];
+    _locationManager = nil;
   }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-  if (_locationManager != nil) {
-    if (_showsUserLocation == YES)
-      [_locationManager startUpdatingLocation];
+  if (_locationManager == nil && _showsUserLocation == YES) {
+    _locationManager = [[CLLocationManager alloc] init];
+    _locationManager.headingFilter = 5;
+    _locationManager.delegate = self;
+    
+    [_locationManager startUpdatingLocation];
     
     if (_userTrackingMode == RMUserTrackingModeFollowWithHeading)
       [_locationManager startUpdatingHeading];
