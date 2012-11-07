@@ -42,4 +42,7 @@
 // URLs are ordered from the bottom layer to the top layer.
 - (NSArray *)URLsForTile:(RMTile)tile;
 
+//optional post-processing code for downloaded tiles
+- (UIImage *)postProcessTileImage:(UIImage *)image;
+
 @end

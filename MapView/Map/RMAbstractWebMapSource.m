@@ -28,6 +28,7 @@
 #import "RMAbstractWebMapSource.h"
 #import "RMTileCache.h"
 
+#define HTTP_403_FORBIDDEN 403
 #define HTTP_404_NOT_FOUND 404
 
 @implementation RMAbstractWebMapSource
@@ -127,9 +128,14 @@
             {
                 if (image != nil)
                 {
+                    UIImage *imageToAdd = nil;
+
                     UIGraphicsBeginImageContext(image.size);
                     [image drawAtPoint:CGPointMake(0,0)];
-                    [[UIImage imageWithData:tileData] drawAtPoint:CGPointMake(0,0)];
+                  
+                    imageToAdd = [UIImage imageWithData:tileData];
+                    imageToAdd = [self postProcessTileImage:imageToAdd];
+                    [imageToAdd drawAtPoint:CGPointMake(0,0)];
 
                     image = UIGraphicsGetImageFromCurrentImageContext();
                     UIGraphicsEndImageContext();
@@ -137,6 +143,7 @@
                 else
                 {
                     image = [UIImage imageWithData:tileData];
+                    image = [self postProcessTileImage:image];
                 }
             }
         }
@@ -149,9 +156,15 @@
             NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[URLs objectAtIndex:0]];
             [request setTimeoutInterval:(self.requestTimeoutSeconds / (CGFloat)self.retryCount)];
             image = [UIImage imageWithData:[NSURLConnection sendSynchronousRequest:request returningResponse:&response error:nil]];
-
-            if (response.statusCode == HTTP_404_NOT_FOUND)
-                break;
+            image = [self postProcessTileImage:image];
+          
+          if (response.statusCode == HTTP_403_FORBIDDEN || response.statusCode == HTTP_404_NOT_FOUND) {
+            //some tile sources return HTTP_403_FORBIDDEN but give us a 'quota exceeded' image
+            //and we certainly don't want to cache *that* image
+            image = nil;
+            
+            break;
+          }
         }
     }
     else
@@ -170,6 +183,11 @@
     });
 
     return image;
+}
+
+- (UIImage *)postProcessTileImage:(UIImage *)image {
+  //no postprocessing by default
+  return image;
 }
 
 @end
