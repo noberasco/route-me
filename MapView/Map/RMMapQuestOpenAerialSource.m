@@ -66,12 +66,17 @@
 
 - (NSString *)shortAttribution
 {
-	return @"Tiles courtesy of MapQuest.";
+	return @"Tiles courtesy of MapQuest";
 }
 
 - (NSString *)longAttribution
 {
 	return @"Tiles courtesy of MapQuest and OpenStreetMap contributors. Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture, Farm Service Agency.";
+}
+
+- (NSString *)copyrightURL
+{
+  return @"http://www.mapquest.com";
 }
 
 @end
