@@ -27,7 +27,11 @@
 
 #import "RMOpenCycleMapLandscapeSource.h"
 
-@implementation RMOpenCycleMapLandscapeSource
+@implementation RMOpenCycleMapLandscapeSource {
+  BOOL addHillshadeLayer;
+}
+
+@synthesize addHillshadeLayer;
 
 - (id)init
 {
@@ -40,13 +44,22 @@
 	return self;
 } 
 
-- (NSURL *)URLForTile:(RMTile)tile
-{
+- (NSArray *)URLsForTile:(RMTile)tile {
 	NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
-			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
-			  self, tile.zoom, self.minZoom, self.maxZoom);
-
-	return [NSURL URLWithString:[NSString stringWithFormat:@"http://tile3.opencyclemap.org/landscape/%d/%d/%d.png", tile.zoom, tile.x, tile.y]];
+            @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f",
+            self, tile.zoom, self.minZoom, self.maxZoom);
+  
+  NSMutableArray *array = [NSMutableArray array];
+  
+  [array addObject:[NSURL URLWithString:[NSString stringWithFormat:@"http://tile3.opencyclemap.org/landscape/%d/%d/%d.png", tile.zoom, tile.x, tile.y]]];
+  
+  if (addHillshadeLayer) {
+    [array addObject:[NSURL URLWithString:[NSString stringWithFormat:@"http://129.206.74.245:8004/tms_hs.ashx?x=%d&y=%d&z=%d", tile.x, tile.y, tile.zoom]]];
+    
+    RMLog(@"WARNING: check licensing for hillshadeLayer: http://openmapsurfer.uni-hd.de/contact.html");
+  }
+  
+  return array;
 }
 
 - (NSString *)uniqueTilecacheKey

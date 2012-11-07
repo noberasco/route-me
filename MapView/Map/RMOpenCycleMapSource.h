@@ -29,4 +29,6 @@
 
 @interface RMOpenCycleMapSource : RMAbstractWebMapSource
 
+@property(nonatomic, assign) BOOL addHillshadeLayer;
+
 @end
