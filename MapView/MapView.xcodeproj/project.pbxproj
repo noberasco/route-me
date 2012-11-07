@@ -81,6 +81,8 @@
 		B8F3FC650EA2E792004D8F85 /* RMMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = B8F3FC630EA2E792004D8F85 /* RMMarker.m */; };
 		D1437B36122869E400888DAE /* RMDBMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D1437B32122869E400888DAE /* RMDBMapSource.m */; };
 		D1437B37122869E400888DAE /* RMDBMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D1437B33122869E400888DAE /* RMDBMapSource.h */; };
+		D9045E9C1649D50B0016CCE7 /* RMGoogleMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9045E9A1649D50B0016CCE7 /* RMGoogleMapSource.h */; };
+		D9045E9D1649D50B0016CCE7 /* RMGoogleMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9045E9B1649D50B0016CCE7 /* RMGoogleMapSource.m */; };
 		D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */; };
 		D91243421625D0FF0072884C /* RMOpenCycleMapLandscapeSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */; };
 		D9651D031626380000D96219 /* RMOpenCycleMapTransportSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D011626380000D96219 /* RMOpenCycleMapTransportSource.h */; };
@@ -211,6 +213,8 @@
 		B8F3FC630EA2E792004D8F85 /* RMMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMarker.m; sourceTree = "<group>"; };
 		D1437B32122869E400888DAE /* RMDBMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDBMapSource.m; sourceTree = "<group>"; };
 		D1437B33122869E400888DAE /* RMDBMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDBMapSource.h; sourceTree = "<group>"; };
+		D9045E9A1649D50B0016CCE7 /* RMGoogleMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMGoogleMapSource.h; sourceTree = "<group>"; };
+		D9045E9B1649D50B0016CCE7 /* RMGoogleMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMGoogleMapSource.m; sourceTree = "<group>"; };
 		D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapLandscapeSource.h; sourceTree = "<group>"; };
 		D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapLandscapeSource.m; sourceTree = "<group>"; };
 		D9651D011626380000D96219 /* RMOpenCycleMapTransportSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapTransportSource.h; sourceTree = "<group>"; };
@@ -299,6 +303,8 @@
 				B83E64EE0E80E73F001663B6 /* RMOpenStreetMapSource.m */,
 				D9651D05162643D200D96219 /* RMVirtualEarthSource.h */,
 				D9651D06162643D300D96219 /* RMVirtualEarthSource.m */,
+				D9045E9A1649D50B0016CCE7 /* RMGoogleMapSource.h */,
+				D9045E9B1649D50B0016CCE7 /* RMGoogleMapSource.m */,
 			);
 			name = "Map sources";
 			sourceTree = "<group>";
@@ -589,6 +595,7 @@
 				D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */,
 				D9651D031626380000D96219 /* RMOpenCycleMapTransportSource.h in Headers */,
 				D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */,
+				D9045E9C1649D50B0016CCE7 /* RMGoogleMapSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +710,7 @@
 				D91243421625D0FF0072884C /* RMOpenCycleMapLandscapeSource.m in Sources */,
 				D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */,
 				D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */,
+				D9045E9D1649D50B0016CCE7 /* RMGoogleMapSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
