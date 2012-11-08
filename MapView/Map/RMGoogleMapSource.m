@@ -29,16 +29,17 @@
 
 @interface RMGoogleMapSource()
 
-@property (nonatomic, assign  ) RMGoogleMapType  mapType;
-@property (nonatomic, retain  ) NSString        *accessKey;
-@property (nonatomic, readonly) NSInteger        tileWidth;
-@property (nonatomic, readonly) NSInteger        tileHeight;
+@property (nonatomic, assign  ) RMGoogleMapType         mapType;
+@property (nonatomic, retain  ) NSString               *accessKey;
+@property (nonatomic, readonly) NSInteger               tileWidth;
+@property (nonatomic, readonly) NSInteger               tileHeight;
+@property (nonatomic, assign  ) CLLocationCoordinate2D  center;
 
 @end
 
 @implementation RMGoogleMapSource {
-  RMGoogleMapType  mapType;
-  NSString        *accessKey;
+  NSString               *accessKey;
+  CLLocationCoordinate2D  center;
 }
 
 #pragma mark -
@@ -48,10 +49,11 @@
 	if (!(self = [super init]))
     return nil;
   
-  self.minZoom = 1;
-  self.maxZoom = 18;
+  self.minZoom   = 1;
+  self.maxZoom   = 18;
   self.mapType   = aMapType;
   self.accessKey = developerAccessKey;
+  self.center    = CLLocationCoordinate2DMake(0.0, 0.0);
   
 	return self;
 }
@@ -67,6 +69,7 @@
 
 @synthesize accessKey;
 @synthesize mapType;
+@synthesize center;
 
 - (NSInteger)tileWidth {
   return kDefaultTileSize;
@@ -79,13 +82,12 @@
 #pragma mark -
 #pragma mark RMAbstractWebMapSource methods implementation
 
-- (NSURL *)URLForTile:(RMTile)tile
-{
+- (NSURL *)URLForTile:(RMTile)tile {
 	NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
             @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f",
             self, tile.zoom, self.minZoom, self.maxZoom);
   
-  CLLocationCoordinate2D  center = [self centerCoordinatesForTile:tile];
+  CLLocationCoordinate2D  coords = [self centerCoordinatesForTile:tile];
   NSString               *type   = [self mapTypeString];
   int                     width  = self.tileWidth;
   int                     height = self.tileHeight;
@@ -100,7 +102,7 @@
     zoom   -= 1;
   }
   
-  NSString *url = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&scale=%d&maptype=%@&sensor=true&key=%@", center.latitude, center.longitude, zoom, width, height, scale, type, accessKey];
+  NSString *url = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&scale=%d&maptype=%@&sensor=true&key=%@", coords.latitude, coords.longitude, zoom, width, height, scale, type, accessKey];
   
 //  NSLog(@"%@", url);
   
@@ -148,7 +150,7 @@
 }
 
 - (NSString *)copyrightURL {
-  return nil;
+  return [NSString stringWithFormat:@"http://maps.google.com?q=%f,%f&t=%@", self.center.latitude, self.center.longitude, self.mapTypeQueryString];
 }
 
 #pragma mark -
@@ -167,7 +169,8 @@
   CLLocationCoordinate2D southEast = [self nwCoordinateForTile:RMTileMake(tile.x + 1, tile.y + 1, tile.zoom)];
   CLLocationDegrees      latitude  = (northWest.latitude  + southEast.latitude ) / 2.0;
   CLLocationDegrees      longitude = (northWest.longitude + southEast.longitude) / 2.0;
-  CLLocationCoordinate2D center    = CLLocationCoordinate2DMake(latitude, longitude);
+  
+  self.center = CLLocationCoordinate2DMake(latitude, longitude);
   
   return center;
 }
@@ -190,6 +193,27 @@
       break;
   }
   
+  return string;
+}
+
+- (NSString *)mapTypeQueryString {
+  NSString *string = nil;
+  
+  switch (mapType) {
+    case kRMGoogleMapTypeRoad:
+      string = @"m";
+      break;
+    case kRMGoogleMapTypeSatellite:
+      string = @"k";
+      break;
+    case kRMGoogleMapTypeHybrid:
+      string = @"h";
+      break;
+    case kRMGoogleMapTypeTerrain:
+      string = @"p";
+      break;
+  }
+
   return string;
 }
 
