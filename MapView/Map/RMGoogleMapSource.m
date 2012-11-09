@@ -121,16 +121,16 @@
   
   switch (self.mapType) {
     case kRMGoogleMapTypeRoad:
-      string = @"Google Road";
+      string = NSLocalizedString(@"Google Road", @"");
       break;
     case kRMGoogleMapTypeSatellite:
-      string = @"Google Satellite";
+      string = NSLocalizedString(@"Google Satellite", @"");
       break;
     case kRMGoogleMapTypeHybrid:
-      string = @"Google Hybrid";
+      string = NSLocalizedString(@"Google Hybrid", @"");
       break;
     case kRMGoogleMapTypeTerrain:
-      string = @"Google Terrain";
+      string = NSLocalizedString(@"Google Terrain", @"");
       break;
   }
   

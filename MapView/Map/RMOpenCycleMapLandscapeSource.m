@@ -69,7 +69,7 @@
 
 - (NSString *)shortName
 {
-	return @"Open Cycle Map Landscape";
+	return NSLocalizedString(@"Open Cycle Map Landscape", @"");
 }
 
 - (NSString *)longDescription

@@ -149,13 +149,13 @@ static NSMutableDictionary *authDataContainer = nil;
   
   switch (mapType) {
     case kRMirtualEarthMapTypeRoad:
-      string = @"Bing Road";
+      string = NSLocalizedString(@"Bing Road", @"");
       break;
     case kRMirtualEarthMapTypeAerial:
-      string = @"Bing Aerial";
+      string = NSLocalizedString(@"Bing Aerial", @"");
       break;
     case kRMirtualEarthMapTypeHybrid:
-      string = @"Bing Hybrid";
+      string = NSLocalizedString(@"Bing Hybrid", @"");
       break;
   }
   

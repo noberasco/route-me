@@ -59,7 +59,7 @@
 
 - (NSString *)shortName
 {
-	return @"Open Sea Map";
+	return NSLocalizedString(@"Open Sea Map", @"");
 }
 
 - (NSString *)longDescription

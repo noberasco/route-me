@@ -56,7 +56,7 @@
 
 - (NSString *)shortName
 {
-	return @"Open Street Map";
+	return NSLocalizedString(@"Open Street Map", @"");
 }
 
 - (NSString *)longDescription

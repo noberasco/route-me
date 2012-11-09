@@ -56,7 +56,7 @@
 
 - (NSString *)shortName
 {
-	return @"Open Cycle Map Transport";
+	return NSLocalizedString(@"Open Cycle Map Transport", @"");
 }
 
 - (NSString *)longDescription

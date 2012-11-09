@@ -56,7 +56,7 @@
 
 - (NSString *)shortName
 {
-	return @"MapQuest Open Aerial";
+	return NSLocalizedString(@"MapQuest Open Aerial", @"");
 }
 
 - (NSString *)longDescription
