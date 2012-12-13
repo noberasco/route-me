@@ -278,6 +278,11 @@
 	return [self getPreferenceAsString:kLongAttributionKey];
 }
 
+- (NSString *)copyrightURL
+{
+  return @"";
+}
+
 #pragma mark preference methods
 
 - (NSString *)getPreferenceAsString:(NSString*)name
