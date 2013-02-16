@@ -30,6 +30,7 @@
 
 @interface RMDBMapSource : RMAbstractMercatorTileSource
 
++ (BOOL)isValidRMDBMapSourceAtPath:(NSString *)path;
 - (id)initWithPath:(NSString *)path;
 
 - (CLLocationCoordinate2D)topLeftOfCoverage;

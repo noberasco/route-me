@@ -52,7 +52,6 @@
 #import "RMMapViewDelegate.h"
 #import "RMMarker.h"
 #import "RMMemoryCache.h"
-#import "RMNotifications.h"
 #import "RMOpenCycleMapSource.h"
 #import "RMOpenCycleMapTransportSource.h"
 #import "RMOpenCycleMapLandscapeSource.h"
