@@ -1,6 +1,6 @@
 //
-// RouteMe.h
-// 
+//  RMOpenSeaMapSource.h
+//
 // Copyright (c) 2008-2012, Route-Me Contributors
 // All rights reserved.
 //
@@ -25,49 +25,8 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// The list of header files for more convenient Route-Me import to projects.
-// (in alphabetic order)
-
-#import "NSUserDefaults+RouteMe.h"
-#import "RMAbstractMercatorTileSource.h"
 #import "RMAbstractWebMapSource.h"
-#import "RMAnnotation.h"
-#import "RMCacheObject.h"
-#import "RMCircle.h"
-#import "RMConfiguration.h"
-#import "RMCoordinateGridSource.h"
-#import "RMDBMapSource.h"
-#import "RMDatabaseCache.h"
-#import "RMFoundation.h"
-#import "RMFractalTileProjection.h"
-#import "RMGenericMapSource.h"
-#import "RMGlobalConstants.h"
-#import "RMMapLayer.h"
-#import "RMMapOverlayView.h"
-#import "RMMapQuestOSMSource.h"
-#import "RMMapQuestOpenAerialSource.h"
-#import "RMMapScrollView.h"
-#import "RMMapTiledLayerView.h"
-#import "RMMapView.h"
-#import "RMMapViewDelegate.h"
-#import "RMMarker.h"
-#import "RMMemoryCache.h"
-#import "RMOpenCycleMapSource.h"
-#import "RMOpenCycleMapTransportSource.h"
-#import "RMOpenCycleMapLandscapeSource.h"
-#import "RMOpenSeaMapLayer.h"
-#import "RMOpenSeaMapSource.h"
-#import "RMOpenStreetMapSource.h"
-#import "RMVirtualEarthSource.h"
-#import "RMGoogleMapSource.h"
-#import "RMTopOSMUSAMapSource.h"
-#import "RMPixel.h"
-#import "RMProjection.h"
-#import "RMShape.h"
-#import "RMTile.h"
-#import "RMTileCache.h"
-#import "RMTileImage.h"
-#import "RMTileSource.h"
-#import "RMTileSourcesContainer.h"
-#import "RMUserLocation.h"
-#import "RMUserTrackingBarButtonItem.h"
+
+@interface RMTopOSMUSAMapSource : RMAbstractWebMapSource
+
+@end
