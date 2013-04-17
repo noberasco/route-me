@@ -122,19 +122,24 @@
 }
 
 + (BOOL)isValidRMDBMapSourceAtPath:(NSString *)path {
-  RMDBMapSource *mapSource = [[[RMDBMapSource alloc] initWithPath:path] autorelease];
-  BOOL           valid     = NO;
-  
-  if ([mapSource getPreferenceAsString:kTileSideLengthKey] != nil)
-    valid = YES;
-  else if ([mapSource getPreferenceAsString:kMinZoomKey] != nil)
-    valid = YES;
-  else if ([mapSource getPreferenceAsString:kMaxZoomKey] != nil)
-    valid = YES;
-  else if ([mapSource getPreferenceAsString:kCoverageCenterLatitudeKey] != nil)
-    valid = YES;
-  else if ([mapSource getPreferenceAsString:kCoverageCenterLongitudeKey] != nil)
-    valid = YES;
+  BOOL valid  = NO;
+  BOOL isDir  = NO;
+  BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir];
+
+  if (exists == YES && isDir == NO) {
+    RMDBMapSource *mapSource = [[[RMDBMapSource alloc] initWithPath:path] autorelease];
+    
+    if ([mapSource getPreferenceAsString:kTileSideLengthKey] != nil)
+      valid = YES;
+    else if ([mapSource getPreferenceAsString:kMinZoomKey] != nil)
+      valid = YES;
+    else if ([mapSource getPreferenceAsString:kMaxZoomKey] != nil)
+      valid = YES;
+    else if ([mapSource getPreferenceAsString:kCoverageCenterLatitudeKey] != nil)
+      valid = YES;
+    else if ([mapSource getPreferenceAsString:kCoverageCenterLongitudeKey] != nil)
+      valid = YES;
+  }
   
   return valid;
 }
