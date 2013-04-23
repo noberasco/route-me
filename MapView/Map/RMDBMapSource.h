@@ -28,6 +28,29 @@
 #import "RMAbstractMercatorTileSource.h"
 #import "RMProjection.h"
 
+#pragma mark --- begin constants ----
+
+// mandatory preference keys
+#define kMinZoomKey @"map.minZoom"
+#define kMaxZoomKey @"map.maxZoom"
+#define kTileSideLengthKey @"map.tileSideLength"
+
+// optional preference keys for the coverage area
+#define kCoverageTopLeftLatitudeKey @"map.coverage.topLeft.latitude"
+#define kCoverageTopLeftLongitudeKey @"map.coverage.topLeft.longitude"
+#define kCoverageBottomRightLatitudeKey @"map.coverage.bottomRight.latitude"
+#define kCoverageBottomRightLongitudeKey @"map.coverage.bottomRight.longitude"
+#define kCoverageCenterLatitudeKey @"map.coverage.center.latitude"
+#define kCoverageCenterLongitudeKey @"map.coverage.center.longitude"
+
+// optional preference keys for the attribution
+#define kShortNameKey @"map.shortName"
+#define kLongDescriptionKey @"map.longDescription"
+#define kShortAttributionKey @"map.shortAttribution"
+#define kLongAttributionKey @"map.longAttribution"
+
+#pragma mark --- end constants ----
+
 @interface RMDBMapSource : RMAbstractMercatorTileSource
 
 + (BOOL)isValidRMDBMapSourceAtPath:(NSString *)path;
