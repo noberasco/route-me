@@ -84,6 +84,8 @@
 		D9045E9D1649D50B0016CCE7 /* RMGoogleMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9045E9B1649D50B0016CCE7 /* RMGoogleMapSource.m */; };
 		D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */; };
 		D91243421625D0FF0072884C /* RMOpenCycleMapLandscapeSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */; };
+		D9346EBF172E932F009F7AA1 /* RMMBTilesSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9346EBD172E932F009F7AA1 /* RMMBTilesSource.m */; };
+		D9346EC1172E938F009F7AA1 /* RMMBTilesSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9346EC0172E938F009F7AA1 /* RMMBTilesSource.h */; };
 		D9651D031626380000D96219 /* RMOpenCycleMapTransportSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D011626380000D96219 /* RMOpenCycleMapTransportSource.h */; };
 		D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */; };
 		D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D05162643D200D96219 /* RMVirtualEarthSource.h */; };
@@ -217,6 +219,8 @@
 		D9045E9B1649D50B0016CCE7 /* RMGoogleMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMGoogleMapSource.m; sourceTree = "<group>"; };
 		D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapLandscapeSource.h; sourceTree = "<group>"; };
 		D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapLandscapeSource.m; sourceTree = "<group>"; };
+		D9346EBD172E932F009F7AA1 /* RMMBTilesSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMBTilesSource.m; sourceTree = "<group>"; };
+		D9346EC0172E938F009F7AA1 /* RMMBTilesSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMBTilesSource.h; sourceTree = "<group>"; };
 		D9651D011626380000D96219 /* RMOpenCycleMapTransportSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapTransportSource.h; sourceTree = "<group>"; };
 		D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapTransportSource.m; sourceTree = "<group>"; };
 		D9651D05162643D200D96219 /* RMVirtualEarthSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVirtualEarthSource.h; sourceTree = "<group>"; };
@@ -291,6 +295,8 @@
 				16FFF2CA14E3DBF700A170EC /* RMMapQuestOpenAerialSource.m */,
 				DD8CDB4814E0507100B73EB9 /* RMMapQuestOSMSource.h */,
 				DD8CDB4914E0507100B73EB9 /* RMMapQuestOSMSource.m */,
+				D9346EC0172E938F009F7AA1 /* RMMBTilesSource.h */,
+				D9346EBD172E932F009F7AA1 /* RMMBTilesSource.m */,
 				1606C9FC13D86BA300547581 /* RMOpenCycleMapSource.h */,
 				1606C9FD13D86BA300547581 /* RMOpenCycleMapSource.m */,
 				D9651D011626380000D96219 /* RMOpenCycleMapTransportSource.h */,
@@ -599,6 +605,7 @@
 				D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */,
 				D9045E9C1649D50B0016CCE7 /* RMGoogleMapSource.h in Headers */,
 				D9E188CA171C14D00041E4E9 /* RMTopOSMUSAMapSource.h in Headers */,
+				D9346EC1172E938F009F7AA1 /* RMMBTilesSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +722,7 @@
 				D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */,
 				D9045E9D1649D50B0016CCE7 /* RMGoogleMapSource.m in Sources */,
 				D9E188CB171C14D00041E4E9 /* RMTopOSMUSAMapSource.m in Sources */,
+				D9346EBF172E932F009F7AA1 /* RMMBTilesSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

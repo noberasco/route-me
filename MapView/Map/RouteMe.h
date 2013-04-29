@@ -37,6 +37,7 @@
 #import "RMConfiguration.h"
 #import "RMCoordinateGridSource.h"
 #import "RMDBMapSource.h"
+#import "RMMBTilesSource.h"
 #import "RMDatabaseCache.h"
 #import "RMFoundation.h"
 #import "RMFractalTileProjection.h"
