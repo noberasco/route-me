@@ -1,6 +1,6 @@
 //
-// RouteMe.h
-// 
+//  OpenStreetMapsSource.m
+//
 // Copyright (c) 2008-2012, Route-Me Contributors
 // All rights reserved.
 //
@@ -25,51 +25,60 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-// The list of header files for more convenient Route-Me import to projects.
-// (in alphabetic order)
-
-#import "NSUserDefaults+RouteMe.h"
-#import "RMAbstractMercatorTileSource.h"
-#import "RMAbstractWebMapSource.h"
-#import "RMAnnotation.h"
-#import "RMCacheObject.h"
-#import "RMCircle.h"
-#import "RMConfiguration.h"
-#import "RMCoordinateGridSource.h"
-#import "RMDBMapSource.h"
-#import "RMMBTilesSource.h"
-#import "RMDatabaseCache.h"
-#import "RMFoundation.h"
-#import "RMFractalTileProjection.h"
-#import "RMGenericMapSource.h"
-#import "RMGlobalConstants.h"
-#import "RMMapLayer.h"
-#import "RMMapOverlayView.h"
-#import "RMMapQuestOSMSource.h"
-#import "RMMapQuestOpenAerialSource.h"
-#import "RMMapScrollView.h"
-#import "RMMapTiledLayerView.h"
-#import "RMMapView.h"
-#import "RMMapViewDelegate.h"
-#import "RMMarker.h"
-#import "RMMemoryCache.h"
-#import "RMOpenCycleMapSource.h"
-#import "RMOpenCycleMapTransportSource.h"
-#import "RMOpenCycleMapLandscapeSource.h"
-#import "RMOpenSeaMapLayer.h"
-#import "RMOpenSeaMapSource.h"
-#import "RMOpenStreetMapSource.h"
 #import "RMOrdnanceSurveyOpenDataMapSource.h"
-#import "RMVirtualEarthSource.h"
-#import "RMGoogleMapSource.h"
-#import "RMTopOSMUSAMapSource.h"
-#import "RMPixel.h"
-#import "RMProjection.h"
-#import "RMShape.h"
-#import "RMTile.h"
-#import "RMTileCache.h"
-#import "RMTileImage.h"
-#import "RMTileSource.h"
-#import "RMTileSourcesContainer.h"
-#import "RMUserLocation.h"
-#import "RMUserTrackingBarButtonItem.h"
+
+@implementation RMOrdnanceSurveyOpenDataMapSource
+
+- (id)init
+{
+	if (!(self = [super init]))
+        return nil;
+
+    self.minZoom = 1;
+    self.maxZoom = 16;
+
+	return self;
+} 
+
+- (NSURL *)URLForTile:(RMTile)tile
+{
+	NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
+			  self, tile.zoom, self.minZoom, self.maxZoom);
+
+  int instance = (tile.x + tile.y) % 5;
+  
+  return [NSURL URLWithString:[NSString stringWithFormat:@"http://t%d.cz.tileserver.com/osnew/%d/%d/%d.png", instance, tile.zoom, tile.x, tile.y]];
+}
+
+- (NSString *)uniqueTilecacheKey
+{
+	return @"OSOpenDataUK";
+}
+
+- (NSString *)shortName
+{
+	return NSLocalizedString(@"Ordnance Survey OpenData UK", @"");
+}
+
+- (NSString *)longDescription
+{
+	return @"Ordnance Survey makes a number of datasets available free of charge under the terms of an OS OpenData Licence.";
+}
+
+- (NSString *)shortAttribution
+{
+	return @"@ Crown copyright and database right 2010";
+}
+
+- (NSString *)longAttribution
+{
+	return @"Ordnance Survey OpenData @ Crown copyright and database right 2010 Klokan Technologies GmbH";
+}
+
+- (NSString *)copyrightURL
+{
+  return @"http://www.ordnancesurvey.co.uk/oswebsite/opendata";
+}
+
+@end
