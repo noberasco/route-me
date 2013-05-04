@@ -2549,8 +2549,7 @@
                                 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseInOut
                              animations:^(void)
                              {
-                                 _mapScrollView.transform = CGAffineTransformIdentity;
-                                 _overlayView.transform   = CGAffineTransformIdentity;
+                                 self.transform = CGAffineTransformIdentity;
                                  
                                  for (RMAnnotation *annotation in _annotations)
                                      annotation.layer.transform = CATransform3DIdentity;
@@ -2594,8 +2593,7 @@
                                 options:UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationCurveEaseInOut
                              animations:^(void)
                              {
-                                 _mapScrollView.transform = CGAffineTransformIdentity;
-                                 _overlayView.transform   = CGAffineTransformIdentity;
+                                 self.transform = CGAffineTransformIdentity;
 
                                  for (RMAnnotation *annotation in _annotations)
                                      annotation.layer.transform = CATransform3DIdentity;
@@ -2795,8 +2793,7 @@
                          {
                              CGFloat angle = (M_PI / -180) * newHeading.trueHeading;
 
-                             _mapScrollView.transform = CGAffineTransformMakeRotation(angle);
-                             _overlayView.transform   = CGAffineTransformMakeRotation(angle);
+                             self.transform = CGAffineTransformMakeRotation(angle);
 
                              for (RMAnnotation *annotation in _annotations)
                                  if ([annotation.layer isKindOfClass:[RMMarker class]] && ! annotation.isUserLocationAnnotation)
