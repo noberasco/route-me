@@ -37,7 +37,8 @@ typedef enum {
 
 @interface RMGoogleMapSource : RMAbstractWebMapSource {
 @protected
-  RMGoogleMapType mapType;
+  RMGoogleMapType  mapType;
+  NSString        *accessKey;
 }
 
 - (id)initWithMapType:(RMGoogleMapType)mapType usingAccessKey:(NSString *)developerAccessKey;

@@ -38,8 +38,7 @@
 @end
 
 @implementation RMGoogleMapSource {
-  NSString               *accessKey;
-  CLLocationCoordinate2D  center;
+  CLLocationCoordinate2D center;
 }
 
 #pragma mark -
