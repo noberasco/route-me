@@ -92,6 +92,8 @@
 		D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */; };
 		D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D05162643D200D96219 /* RMVirtualEarthSource.h */; };
 		D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D06162643D300D96219 /* RMVirtualEarthSource.m */; };
+		D9BBF6A51784173F00851665 /* RMOpenCycleMapOutdoorsSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9BBF6A31784173E00851665 /* RMOpenCycleMapOutdoorsSource.h */; };
+		D9BBF6A61784173F00851665 /* RMOpenCycleMapOutdoorsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BBF6A41784173F00851665 /* RMOpenCycleMapOutdoorsSource.m */; };
 		D9E188CA171C14D00041E4E9 /* RMTopOSMUSAMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9E188C8171C14CF0041E4E9 /* RMTopOSMUSAMapSource.h */; };
 		D9E188CB171C14D00041E4E9 /* RMTopOSMUSAMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E188C9171C14D00041E4E9 /* RMTopOSMUSAMapSource.m */; };
 		DD2B374514CF8041008DE8CB /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B373F14CF8041008DE8CB /* FMDatabase.h */; };
@@ -229,6 +231,8 @@
 		D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapTransportSource.m; sourceTree = "<group>"; };
 		D9651D05162643D200D96219 /* RMVirtualEarthSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVirtualEarthSource.h; sourceTree = "<group>"; };
 		D9651D06162643D300D96219 /* RMVirtualEarthSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVirtualEarthSource.m; sourceTree = "<group>"; };
+		D9BBF6A31784173E00851665 /* RMOpenCycleMapOutdoorsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapOutdoorsSource.h; sourceTree = "<group>"; };
+		D9BBF6A41784173F00851665 /* RMOpenCycleMapOutdoorsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapOutdoorsSource.m; sourceTree = "<group>"; };
 		D9E188C8171C14CF0041E4E9 /* RMTopOSMUSAMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTopOSMUSAMapSource.h; sourceTree = "<group>"; };
 		D9E188C9171C14D00041E4E9 /* RMTopOSMUSAMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTopOSMUSAMapSource.m; sourceTree = "<group>"; };
 		DD2B373F14CF8041008DE8CB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */,
 				D912433F1625D0FD0072884C /* RMOpenCycleMapLandscapeSource.h */,
 				D91243401625D0FE0072884C /* RMOpenCycleMapLandscapeSource.m */,
+				D9BBF6A31784173E00851665 /* RMOpenCycleMapOutdoorsSource.h */,
+				D9BBF6A41784173F00851665 /* RMOpenCycleMapOutdoorsSource.m */,
 				16128CF3148D295300C23C0E /* RMOpenSeaMapSource.h */,
 				16128CF4148D295300C23C0E /* RMOpenSeaMapSource.m */,
 				161E56381594664E00B00BB6 /* RMOpenSeaMapLayer.h */,
@@ -613,6 +619,7 @@
 				D9E188CA171C14D00041E4E9 /* RMTopOSMUSAMapSource.h in Headers */,
 				D9346EC1172E938F009F7AA1 /* RMMBTilesSource.h in Headers */,
 				D91A730417330FBB0094BD89 /* RMOrdnanceSurveyOpenDataMapSource.h in Headers */,
+				D9BBF6A51784173F00851665 /* RMOpenCycleMapOutdoorsSource.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +738,7 @@
 				D9E188CB171C14D00041E4E9 /* RMTopOSMUSAMapSource.m in Sources */,
 				D9346EBF172E932F009F7AA1 /* RMMBTilesSource.m in Sources */,
 				D91A730517330FBB0094BD89 /* RMOrdnanceSurveyOpenDataMapSource.m in Sources */,
+				D9BBF6A61784173F00851665 /* RMOpenCycleMapOutdoorsSource.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -56,6 +56,7 @@
 #import "RMOpenCycleMapSource.h"
 #import "RMOpenCycleMapTransportSource.h"
 #import "RMOpenCycleMapLandscapeSource.h"
+#import "RMOpenCycleMapOutdoorsSource.h"
 #import "RMOpenSeaMapLayer.h"
 #import "RMOpenSeaMapSource.h"
 #import "RMOpenStreetMapSource.h"
