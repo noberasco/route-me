@@ -27,67 +27,89 @@
 
 #import "RMGenericMapSource.h"
 
-@implementation RMGenericMapSource
-{
-    NSString *_host, *_uniqueTilecacheKey;
+@interface RMGenericMapSource ()
+
+@property(nonatomic, retain) NSString *urlTemplate;
+
+@end
+
+@implementation RMGenericMapSource {
+@private
+  NSString *urlTemplate;
 }
 
-- (id)initWithHost:(NSString *)host tileCacheKey:(NSString *)tileCacheKey minZoom:(float)minZoom maxZoom:(float)maxZoom
-{
-    if (!(self = [super init]))
-        return nil;
+#pragma mark -
+#pragma mark memory management
 
-    NSAssert(host != nil, @"Empty host parameter not allowed");
-    NSAssert(tileCacheKey != nil, @"Empty tileCacheKey paramter not allowed");
+- (id)initWithParameters:(NSDictionary *)params {
+  if (!(self = [super init]))
+      return nil;
 
-    _host = [host retain];
-    _uniqueTilecacheKey = [tileCacheKey retain];
+  NSAssert(params != nil, @"Empty params parameter not allowed");
 
-    self.minZoom = minZoom;
-    self.maxZoom = maxZoom;
+  self.urlTemplate = [params objectForKey:kServerUrlTemplate];
+  self.minZoom     = [[params objectForKey:kMinZoom] floatValue];
+  self.maxZoom     = [[params objectForKey:kMaxZoom] floatValue];
 
-    return self;
+  return self;
 }
 
-- (void)dealloc
-{
-    [_uniqueTilecacheKey release]; _uniqueTilecacheKey = nil;
-    [_host release]; _host = nil;
-    [super dealloc];
+- (void)dealloc {
+  [urlTemplate release];
+  
+  [super dealloc];
 }
+
+#pragma mark -
+#pragma mark properties
+
+@synthesize urlTemplate;
+
+#pragma mark -
+#pragma mark RMAbstractWebMapSource methods implementation
 
 - (NSURL *)URLForTile:(RMTile)tile
 {
-    NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
-              @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f",
-              self, tile.zoom, self.minZoom, self.maxZoom);
+  NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+            @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f",
+            self, tile.zoom, self.minZoom, self.maxZoom);
 
-    return [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/%d/%d/%d.png", _host, tile.zoom, tile.x, tile.y]];
+  NSString *url = [NSString stringWithString:self.urlTemplate];
+  
+  url = [url stringByReplacingOccurrencesOfString:kXPlaceholder withString:[NSString stringWithFormat:@"%d", tile.x]];
+  url = [url stringByReplacingOccurrencesOfString:kYPlaceholder withString:[NSString stringWithFormat:@"%d", tile.y]];
+  url = [url stringByReplacingOccurrencesOfString:kZPlaceholder withString:[NSString stringWithFormat:@"%d", tile.zoom]];
+  
+  //NSLog(@"URL: %@", url);
+  
+  return [NSURL URLWithString:url];
 }
 
-- (NSString *)uniqueTilecacheKey
-{
-    return _uniqueTilecacheKey;
+#pragma mark -
+#pragma mark RMTileSource methods implementation
+
+- (NSString *)uniqueTilecacheKey {
+  return self.urlTemplate;
 }
 
-- (NSString *)shortName
-{
+- (NSString *)shortName {
+  return @"Generic Map Source";
+}
+
+- (NSString *)longDescription {
 	return @"Generic Map Source";
 }
 
-- (NSString *)longDescription
-{
-	return @"Generic Map Source";
+- (NSString *)shortAttribution {
+	return @"";
 }
 
-- (NSString *)shortAttribution
-{
-	return @"n/a";
+- (NSString *)longAttribution {
+	return @"";
 }
 
-- (NSString *)longAttribution
-{
-	return @"n/a";
+- (NSString *)copyrightURL {
+  return @"";
 }
 
 @end

@@ -27,8 +27,15 @@
 
 #import "RMAbstractWebMapSource.h"
 
+#define kServerUrlTemplate @"URL"
+#define kXPlaceholder      @"[X]"
+#define kYPlaceholder      @"[Y]"
+#define kZPlaceholder      @"[Z]"
+#define kMinZoom           @"MINZOOM"
+#define kMaxZoom           @"MAXZOOM"
+
 @interface RMGenericMapSource : RMAbstractWebMapSource
 
-- (id)initWithHost:(NSString *)host tileCacheKey:(NSString *)tileCacheKey minZoom:(float)minZoom maxZoom:(float)maxZoom;
+- (id)initWithParameters:(NSDictionary *)params;
 
 @end
