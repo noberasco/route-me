@@ -35,55 +35,13 @@
     RMFractalTileProjection *_tileProjection;
     NSString *_attributionImageName;
     NSString *_attributionImageURL;
-#ifdef __IPHONE_7_0
-    RMTileCache *_tileCache;
-#endif
 }
 
 @synthesize minZoom = _minZoom, maxZoom = _maxZoom, attributionImageName = _attributionImageName, attributionImageURL = _attributionImageURL;
 
-#ifdef __IPHONE_7_0
-- (NSInteger)minimumZ {
-  return (NSInteger)_minZoom;
-}
-
-- (void)setMinimumZ:(NSInteger)minimumZ {
-  _minZoom = (float)minimumZ;
-}
-
-- (NSInteger)maximumZ {
-  return (NSInteger)_maxZoom;
-}
-
-- (void)setMaximumZ:(NSInteger)maximumZ {
-  _maxZoom = (float)maximumZ;
-}
-
-- (CGSize)tileSize {
-  return CGSizeMake(self.tileSideLength, self.tileSideLength);
-}
-
-- (void)setTileSize:(CGSize)tileSize {
-  NSAssert(NO, @"this property cannot be set");
-}
-
-- (RMTileCache *)tileCache {
-  return _tileCache;
-}
-
-- (void)setTileCache:(RMTileCache *)tileCache {
-  [_tileCache release];
-  _tileCache = [tileCache retain];
-}
-#endif
-
 - (id)init
 {
-#ifdef __IPHONE_7_0
-  self = [super initWithURLTemplate:@""];
-#else
-  self = [super init];
-#endif
+    self = [super init];
   
   if (self == nil)
     return nil;
@@ -94,12 +52,6 @@
   self.minZoom = kDefaultMinTileZoom;
   self.maxZoom = kDefaultMaxTileZoom;
 
-#ifdef __IPHONE_7_0
-  self.canReplaceMapContent = YES;
-  self.geometryFlipped      = NO;
-  self.tileCache            = nil;
-#endif
-  
     return self;
 }
 
@@ -108,9 +60,6 @@
     [_tileProjection release]; _tileProjection = nil;
     [_attributionImageName release]; _attributionImageName = nil;
     [_attributionImageURL release]; _attributionImageURL = nil;
-#ifdef __IPHONE_7_0
-    [_tileCache release]; _tileCache = nil;
-#endif
     [super dealloc];
 }
 
@@ -197,16 +146,6 @@
                                  reason:@"copyrightURL invoked on RMAbstractMercatorTileSource. Override this method when instantiating an abstract class."
                                userInfo:nil];
 }
-
-#ifdef __IPHONE_7_0
-- (void)loadTileAtPath:(MKTileOverlayPath)path result:(void (^)(NSData *tileData, NSError *error))result {
-  RMTile   tile     = RMTileMake(path.x, path.y, path.z);
-  UIImage *image    = [self imageForTile:tile inCache:self.tileCache];
-  NSData  *tileData = UIImagePNGRepresentation(image);
-  
-  result(tileData, nil);
-}
-#endif
 
 @end
 

@@ -25,10 +25,6 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifdef __IPHONE_7_0
-#import <MapKit/MapKit.h>
-#endif
-
 #import "RMTileSource.h"
 #import "RMFractalTileProjection.h"
 
@@ -41,13 +37,6 @@
 
 #pragma mark --- end constants ---
 
-#ifdef __IPHONE_7_0
-@interface RMAbstractMercatorTileSource : MKTileOverlay <RMTileSource>
-
-@property (nonatomic, retain) RMTileCache *tileCache;
-
-#else
 @interface RMAbstractMercatorTileSource : NSObject <RMTileSource>
-#endif
 
 @end

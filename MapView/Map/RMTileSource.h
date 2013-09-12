@@ -31,9 +31,6 @@
 #import "RMFoundation.h"
 #import "RMGlobalConstants.h"
 
-#define RMTileRequested @"RMTileRequested"
-#define RMTileRetrieved @"RMTileRetrieved"
-
 @class RMFractalTileProjection, RMTileCache, RMProjection, RMTileImage, RMTileCache;
 
 @protocol RMMercatorToTileProjection;
