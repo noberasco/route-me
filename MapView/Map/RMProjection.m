@@ -328,7 +328,7 @@ static RMProjection *_latitudeLongitudeProjection = nil;
     double e1 = (1 - sqrt(1-eccSquared)) / (1 + sqrt(1-eccSquared));
     double N1, T1, C1, R1, D, M;
     double longitudeOrigin;
-    double mu, phi1, phi1Rad;
+    double mu, phi1Rad;
     double x, y, latitude, longitude;
 
     x = easting - 500000.0; // remove 500,000 meter offset for longitude
@@ -353,7 +353,6 @@ static RMProjection *_latitudeLongitudeProjection = nil;
     mu = M / (a * (1 - eccSquared/4 - 3*eccSquared*eccSquared/64 - 5*eccSquared*eccSquared*eccSquared/256));
 
     phi1Rad = mu + (3*e1/2 - 27*e1*e1*e1/32) * sin(2*mu) + (21*e1*e1/16 - 55*e1*e1*e1*e1/32) * sin(4*mu) + (151*e1*e1*e1/96) * sin(6*mu);
-    phi1 = phi1Rad * rad2deg;
 
     N1 = a / sqrt(1 - eccSquared*sin(phi1Rad)*sin(phi1Rad));
     T1 = tan(phi1Rad) * tan(phi1Rad);
