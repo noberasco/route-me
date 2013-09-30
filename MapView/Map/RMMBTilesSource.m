@@ -100,41 +100,44 @@
     return _tileProjection.tileSideLength;
 }
 
-- (UIImage *)imageForTile:(RMTile)tile inCache:(RMTileCache *)tileCache
-{
-    NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
-			  @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
-			  self, tile.zoom, self.minZoom, self.maxZoom);
+- (UIImage *)imageForTile:(RMTile)tile inCache:(RMTileCache *)tileCache {
+  NSAssert4(((tile.zoom >= self.minZoom) && (tile.zoom <= self.maxZoom)),
+      @"%@ tried to retrieve tile with zoomLevel %d, outside source's defined range %f to %f", 
+      self, tile.zoom, self.minZoom, self.maxZoom);
 
-    NSInteger zoom = tile.zoom;
-    NSInteger x    = tile.x;
-    NSInteger y    = pow(2, zoom) - tile.y - 1;
+  NSInteger zoom = tile.zoom;
+  NSInteger x    = tile.x;
+  NSInteger y    = pow(2, zoom) - tile.y - 1;
 
-    __block UIImage *image = nil;
+  __block UIImage *image = nil;
 
-    [_queue inDatabase:^(FMDatabase *db)
-    {
-        FMResultSet *results = [db executeQuery:@"select tile_data from tiles where zoom_level = ? and tile_column = ? and tile_row = ?", 
-                                   [NSNumber numberWithShort:zoom], 
-                                   [NSNumber numberWithUnsignedInt:x], 
-                                   [NSNumber numberWithUnsignedInt:y]];
+  [_queue inDatabase:^(FMDatabase *db) {
+    FMResultSet *results = [db executeQuery:@"select tile_data from tiles where zoom_level = ? and tile_column = ? and tile_row = ?",
+                            [NSNumber numberWithShort:zoom],
+                            [NSNumber numberWithUnsignedInt:x],
+                            [NSNumber numberWithUnsignedInt:y]];
 
-        if ([db hadError])
-            image = [RMTileImage errorTile];
-
-        [results next];
-
+    if ([db hadError]) {
+      image = [RMTileImage errorTile];
+    }
+    else {
+      if ([results next] == NO) {
+        image = [RMTileImage errorTile];
+      }
+      else {
         NSData *data = [results dataForColumn:@"tile_data"];
 
-        if ( ! data)
-            image = [RMTileImage errorTile];
+        if (!data)
+          image = [RMTileImage errorTile];
         else
-            image = [UIImage imageWithData:data];
+          image = [UIImage imageWithData:data];
+      }
+      
+      [results close];
+    }
+  }];
 
-        [results close];
-    }];
-
-    return image;
+  return image;
 }
 
 - (BOOL)tileSourceHasTile:(RMTile)tile
@@ -219,35 +222,11 @@
     [_tileProjection setMaxZoom:aMaxZoom];
 }
 
+#define kDefaultLatLonBoundingBox ((RMSphericalTrapezium){.northEast = {.latitude = 90.0, .longitude = 180.0}, .southWest = {.latitude = -90.0, .longitude = -180.0}})
+
 - (RMSphericalTrapezium)latitudeLongitudeBoundingBox
 {
-    __block RMSphericalTrapezium bounds = kMBTilesDefaultLatLonBoundingBox;
-
-    [_queue inDatabase:^(FMDatabase *db)
-    {
-        FMResultSet *results = [db executeQuery:@"select value from metadata where name = 'bounds'"];
-
-        [results next];
-
-        NSString *boundsString = [results stringForColumnIndex:0];
-
-        [results close];
-
-        if (boundsString)
-        {
-            NSArray *parts = [boundsString componentsSeparatedByString:@","];
-
-            if ([parts count] == 4)
-            {
-                bounds.southWest.longitude = [[parts objectAtIndex:0] doubleValue];
-                bounds.southWest.latitude  = [[parts objectAtIndex:1] doubleValue];
-                bounds.northEast.longitude = [[parts objectAtIndex:2] doubleValue];
-                bounds.northEast.latitude  = [[parts objectAtIndex:3] doubleValue];
-            }
-        }
-    }];
-
-    return bounds;
+    return kDefaultLatLonBoundingBox;
 }
 
 - (CLLocationCoordinate2D)centerCoordinate
@@ -287,18 +266,6 @@
      }];
     
     return centerZoom;
-}
-
-- (BOOL)coversFullWorld
-{
-    RMSphericalTrapezium ownBounds     = [self latitudeLongitudeBoundingBox];
-    RMSphericalTrapezium defaultBounds = kMBTilesDefaultLatLonBoundingBox;
-
-    if (ownBounds.southWest.longitude <= defaultBounds.southWest.longitude + 10 &&
-        ownBounds.northEast.longitude >= defaultBounds.northEast.longitude - 10)
-        return YES;
-
-    return NO;
 }
 
 - (void)didReceiveMemoryWarning

@@ -233,21 +233,6 @@
 	return image;
 }
 
-- (RMSphericalTrapezium)latitudeLongitudeBoundingBox
-{
-    CLLocationCoordinate2D southWest, northEast;
-    southWest.latitude = _bottomRight.latitude;
-    southWest.longitude = _topLeft.longitude;
-    northEast.latitude = _topLeft.latitude;
-    northEast.longitude = _bottomRight.longitude;
-
-    RMSphericalTrapezium bbox;
-    bbox.southWest = southWest;
-    bbox.northEast = northEast;
-
-    return bbox;
-}
-
 - (NSUInteger)tileSideLength
 {
     return _tileSideLength;

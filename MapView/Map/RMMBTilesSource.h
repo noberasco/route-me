@@ -59,7 +59,4 @@
 /** A suggested starting center zoom level for the map layer. */
 - (float)centerZoom;
 
-/** Returns YES if the tile source provides full-world coverage; otherwise, returns NO. */
-- (BOOL)coversFullWorld;
-
 @end
