@@ -34,6 +34,7 @@
 #import "RMAnnotation.h"
 #import "RMCacheObject.h"
 #import "RMCircle.h"
+#import "RMCloudMadeMapSource.h"
 #import "RMConfiguration.h"
 #import "RMCoordinateGridSource.h"
 #import "RMDBMapSource.h"
