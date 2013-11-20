@@ -124,7 +124,7 @@ static NSString   *authToken  = nil;
         authToken  = [[NSString alloc] initWithData:data encoding:NSASCIIStringEncoding];
         authStatus = kAuthStatusAuthenticated;
         
-        NSLog(@"%s: Successfully authenticated for CloudMade maps", __FUNCTION__);
+        NSLog(@"Successfully authenticated for CloudMade maps");
       }
       else if (data != nil) {
         NSString *errMsg = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
@@ -139,7 +139,7 @@ static NSString   *authToken  = nil;
       if (error != nil) {
         NSDictionary *dict = [NSDictionary dictionaryWithObject:error forKey:kCloudMadeAuthenticationErrorKey];
         
-        NSLog(@"%s: Could not authenticate for CloudMade maps: %@", __FUNCTION__, error.localizedDescription);
+        NSLog(@"Could not authenticate for CloudMade maps: %@", error.localizedDescription);
         
         authStatus = kAuthStatusNotAuthenticated;
         
