@@ -108,7 +108,11 @@ static NSString   *authToken  = nil;
     @synchronized([self class]) {
       [authStatusCondition lock];
       
+#ifndef ARMV6_ONLY
       NSString            *url     = [NSString stringWithFormat:@"http://auth.cloudmade.com/token/%@?userid=%@", apiKey, UIDevice.currentDevice.identifierForVendor.UUIDString];
+#else
+      NSString            *url     = [NSString stringWithFormat:@"http://auth.cloudmade.com/token/%@?userid=%@", apiKey, UIDevice.currentDevice.uniqueIdentifier];
+#endif
       NSData              *data    = nil;
       NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]
                                                              cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
