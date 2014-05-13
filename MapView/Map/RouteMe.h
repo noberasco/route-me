@@ -75,3 +75,5 @@
 #import "RMUserLocation.h"
 #import "RMUserTrackingBarButtonItem.h"
 #import "RMGroundOverlayMapSource.h"
+#import "RMCalTopoMapSource.h"
+#import "RMArcGisMapSource.h"

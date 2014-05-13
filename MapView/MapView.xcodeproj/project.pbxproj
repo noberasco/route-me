@@ -92,6 +92,10 @@
 		D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */; };
 		D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D05162643D200D96219 /* RMVirtualEarthSource.h */; };
 		D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D06162643D300D96219 /* RMVirtualEarthSource.m */; };
+		D998671D1922163600FAECDD /* RMCalTopoMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D998671B1922163600FAECDD /* RMCalTopoMapSource.h */; };
+		D998671E1922163600FAECDD /* RMCalTopoMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D998671C1922163600FAECDD /* RMCalTopoMapSource.m */; };
+		D9986725192220D800FAECDD /* RMArcGisMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9986723192220D800FAECDD /* RMArcGisMapSource.h */; };
+		D9986726192220D800FAECDD /* RMArcGisMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9986724192220D800FAECDD /* RMArcGisMapSource.m */; };
 		D9AC8C8D191BBC72002BD3F0 /* RMGroundOverlayMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9AC8C8B191BBC72002BD3F0 /* RMGroundOverlayMapSource.h */; };
 		D9AC8C8E191BBC72002BD3F0 /* RMGroundOverlayMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9AC8C8C191BBC72002BD3F0 /* RMGroundOverlayMapSource.m */; };
 		D9BBF6A51784173F00851665 /* RMOpenCycleMapOutdoorsSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9BBF6A31784173E00851665 /* RMOpenCycleMapOutdoorsSource.h */; };
@@ -233,6 +237,10 @@
 		D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapTransportSource.m; sourceTree = "<group>"; };
 		D9651D05162643D200D96219 /* RMVirtualEarthSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVirtualEarthSource.h; sourceTree = "<group>"; };
 		D9651D06162643D300D96219 /* RMVirtualEarthSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVirtualEarthSource.m; sourceTree = "<group>"; };
+		D998671B1922163600FAECDD /* RMCalTopoMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCalTopoMapSource.h; sourceTree = "<group>"; };
+		D998671C1922163600FAECDD /* RMCalTopoMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCalTopoMapSource.m; sourceTree = "<group>"; };
+		D9986723192220D800FAECDD /* RMArcGisMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMArcGisMapSource.h; sourceTree = "<group>"; };
+		D9986724192220D800FAECDD /* RMArcGisMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMArcGisMapSource.m; sourceTree = "<group>"; };
 		D9AC8C8B191BBC72002BD3F0 /* RMGroundOverlayMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMGroundOverlayMapSource.h; sourceTree = "<group>"; };
 		D9AC8C8C191BBC72002BD3F0 /* RMGroundOverlayMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMGroundOverlayMapSource.m; sourceTree = "<group>"; };
 		D9BBF6A31784173E00851665 /* RMOpenCycleMapOutdoorsSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMOpenCycleMapOutdoorsSource.h; sourceTree = "<group>"; };
@@ -297,6 +305,10 @@
 		16EC85CB133CA69A00219947 /* Map sources */ = {
 			isa = PBXGroup;
 			children = (
+				D9986723192220D800FAECDD /* RMArcGisMapSource.h */,
+				D9986724192220D800FAECDD /* RMArcGisMapSource.m */,
+				D998671B1922163600FAECDD /* RMCalTopoMapSource.h */,
+				D998671C1922163600FAECDD /* RMCalTopoMapSource.m */,
 				1656665315A1DF7900EF3DC7 /* RMCoordinateGridSource.h */,
 				1656665415A1DF7900EF3DC7 /* RMCoordinateGridSource.m */,
 				D1437B33122869E400888DAE /* RMDBMapSource.h */,
@@ -618,8 +630,10 @@
 				16F98C961590CFF000FF90CE /* RMShape.h in Headers */,
 				16FBF07615936BF1004ECAD1 /* RMTileSourcesContainer.h in Headers */,
 				161E563A1594664E00B00BB6 /* RMOpenSeaMapLayer.h in Headers */,
+				D998671D1922163600FAECDD /* RMCalTopoMapSource.h in Headers */,
 				1656665515A1DF7900EF3DC7 /* RMCoordinateGridSource.h in Headers */,
 				D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */,
+				D9986725192220D800FAECDD /* RMArcGisMapSource.h in Headers */,
 				D9651D031626380000D96219 /* RMOpenCycleMapTransportSource.h in Headers */,
 				D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */,
 				D9045E9C1649D50B0016CCE7 /* RMGoogleMapSource.h in Headers */,
@@ -700,6 +714,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8C9743F0E8A19B2007D16AD /* RMTileImage.m in Sources */,
+				D9986726192220D800FAECDD /* RMArcGisMapSource.m in Sources */,
 				B8C974400E8A19B2007D16AD /* RMTile.c in Sources */,
 				B8C974410E8A19B2007D16AD /* RMOpenStreetMapSource.m in Sources */,
 				B8C974420E8A19B2007D16AD /* RMMemoryCache.m in Sources */,
@@ -720,6 +735,7 @@
 				16EC85D7133CA6C300219947 /* RMCacheObject.m in Sources */,
 				160EEDB013D41DEC007C5501 /* RMAnnotation.m in Sources */,
 				D9AC8C8E191BBC72002BD3F0 /* RMGroundOverlayMapSource.m in Sources */,
+				D998671E1922163600FAECDD /* RMCalTopoMapSource.m in Sources */,
 				1606C9FF13D86BA400547581 /* RMOpenCycleMapSource.m in Sources */,
 				160E535813FBDB48004F82F9 /* RMMapTiledLayerView.m in Sources */,
 				1609AF8F14068B09008344B7 /* RMMapOverlayView.m in Sources */,
