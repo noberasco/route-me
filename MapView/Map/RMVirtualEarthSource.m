@@ -194,11 +194,11 @@ static NSMutableDictionary *authDataContainer = nil;
     NSMutableArray *providers    = [NSMutableArray array];
     
     if (resourceSets.count != 1) {
-      RMLog(@"Expected 1 resource sets, got %d (%@)", resourceSets.count, authData);
+      RMLog(@"Expected 1 resource sets, got %lu (%@)", (unsigned long)resourceSets.count, authData);
     }
     
     if (resources.count != 1) {
-      RMLog(@"Expected 1 resources, got %d (%@)", resources.count, authData);
+      RMLog(@"Expected 1 resources, got %lu (%@)", (unsigned long)resources.count, authData);
     }
     
     for (NSDictionary *providerData in rawProviders)
@@ -232,28 +232,7 @@ static NSMutableDictionary *authDataContainer = nil;
   NSDictionary *authData    = nil;
   
   if (error == nil) {
-    NSDictionary *dict      = nil;
-    Class         jsonClass = NSClassFromString(@"NSJSONSerialization");
-    
-    if (jsonClass != nil) {
-      NSJSONReadingOptions   options        = 0;
-      SEL                    selector       = @selector(JSONObjectWithData:options:error:);
-      NSInvocation          *decodeJSONData = [NSInvocation invocationWithMethodSignature:[jsonClass methodSignatureForSelector:selector]];
-      NSError              **errPtr         = &error;
-      
-      [decodeJSONData setTarget:jsonClass];
-      [decodeJSONData setSelector:selector];
-      [decodeJSONData setArgument:&data    atIndex:2];
-      [decodeJSONData setArgument:&options atIndex:3];
-      [decodeJSONData setArgument:&errPtr  atIndex:4];
-      
-      [decodeJSONData invoke];
-      [decodeJSONData getReturnValue:&dict];
-      
-      if (error != nil) {
-        RMLog(@"Could not decode JSON string: %@", error);
-      }
-    }
+    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
 //    RMLog(@"AUTH DATA: %@", dict);
     

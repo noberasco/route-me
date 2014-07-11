@@ -88,8 +88,8 @@
   
   CLLocationCoordinate2D  coords = [self centerCoordinatesForTile:tile];
   NSString               *type   = [self mapTypeString];
-  int                     width  = self.tileWidth;
-  int                     height = self.tileHeight;
+  NSInteger               width  = self.tileWidth;
+  NSInteger               height = self.tileHeight;
   int                     scale  = 1;
   int                     zoom   = tile.zoom;
   
@@ -101,7 +101,7 @@
     zoom   -= 1;
   }
   
-  NSString *url = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%dx%d&scale=%d&maptype=%@&sensor=true&key=%@", coords.latitude, coords.longitude, zoom, width, height, scale, type, accessKey];
+  NSString *url = [NSString stringWithFormat:@"http://maps.googleapis.com/maps/api/staticmap?center=%f,%f&zoom=%d&size=%ldx%ld&scale=%d&maptype=%@&sensor=true&key=%@", coords.latitude, coords.longitude, zoom, (long)width, (long)height, scale, type, accessKey];
   
 //  NSLog(@"%@", url);
   
