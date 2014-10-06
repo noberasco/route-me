@@ -201,8 +201,9 @@ static NSMutableDictionary *authDataContainer = nil;
       RMLog(@"Expected 1 resources, got %lu (%@)", (unsigned long)resources.count, authData);
     }
     
-    for (NSDictionary *providerData in rawProviders)
-      [providers addObject:[providerData objectForKey:@"attribution"]];
+    if ([rawProviders isKindOfClass:[NSArray class]])
+      for (NSDictionary *providerData in rawProviders)
+        [providers addObject:[providerData objectForKey:@"attribution"]];
     
     self.minZoom             = [[resourceData objectForKey:@"zoomMin"] integerValue];
     self.maxZoom             = [[resourceData objectForKey:@"zoomMax"] integerValue];
