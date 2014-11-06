@@ -257,18 +257,14 @@ static NSMutableDictionary *authDataContainer = nil;
           [archiver finishEncoding];
           [archiver release];
           
-          [[NSUserDefaults standardUserDefaults] synchronize];
           [[NSUserDefaults standardUserDefaults] setObject:data forKey:authDataKey];
-          [[NSUserDefaults standardUserDefaults] synchronize];
         }
       }
       else {
         //authentication failed: remove auth data from persistent cache
         
         @synchronized([self class]) {
-          [[NSUserDefaults standardUserDefaults] synchronize];
           [[NSUserDefaults standardUserDefaults] removeObjectForKey:authDataKey];
-          [[NSUserDefaults standardUserDefaults] synchronize];
         }
         
         RMLog(@"Could not authenticate for BING %@ maps: %@", authDataKey, dict);
@@ -311,7 +307,6 @@ static NSMutableDictionary *authDataContainer = nil;
       @synchronized([self class]) {
         NSData *data = nil;
         
-        [[NSUserDefaults standardUserDefaults] synchronize];
         data = [[NSUserDefaults standardUserDefaults] dataForKey:authDataKey];
         
         if (data != nil) {
