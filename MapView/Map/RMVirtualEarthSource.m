@@ -124,6 +124,10 @@ static NSMutableDictionary *authDataContainer = nil;
 @synthesize authStatus;
 @synthesize imageryProviders;
 
+- (NSMutableDictionary *)authDataContainer {
+  return authDataContainer;
+}
+
 #pragma mark -
 #pragma mark RMAbstractWebMapSource methods implementation
 
