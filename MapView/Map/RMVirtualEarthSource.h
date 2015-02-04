@@ -34,7 +34,10 @@ typedef enum {
   
 } RMVirtualEarthMapType;
 
-@interface RMVirtualEarthSource : RMAbstractWebMapSource
+@interface RMVirtualEarthSource : RMAbstractWebMapSource {
+@protected
+  NSString *accessKey;
+}
 
 - (id)initWithMapType:(RMVirtualEarthMapType)mapType usingAccessKey:(NSString *)developerAccessKey;
 

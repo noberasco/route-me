@@ -59,7 +59,6 @@ static NSMutableDictionary *authDataContainer = nil;
 @implementation RMVirtualEarthSource {
 @private
   RMVirtualEarthMapType  mapType;
-	NSString              *accessKey;
   NSCondition           *authStatusCondition;
   AuthStatus             authStatus;
   NSString              *urlTemplate;
@@ -79,8 +78,6 @@ static NSMutableDictionary *authDataContainer = nil;
 }
 
 - (id)initWithMapType:(RMVirtualEarthMapType)aMapType usingAccessKey:(NSString *)developerAccessKey {
-  NSAssert(([developerAccessKey length] > 0), @"Virtual Earth access key must be non-empty");
-  
   if (self = [super init]) {
     mapType             = aMapType;
     accessKey           = [developerAccessKey retain];
