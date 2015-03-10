@@ -70,8 +70,10 @@
 
 - (void)touch
 {
+  @synchronized(_timestamp) {
     [_timestamp autorelease];
     _timestamp = [NSDate new];
+  }
 }
 
 - (NSString *)description
