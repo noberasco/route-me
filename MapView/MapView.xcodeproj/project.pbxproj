@@ -90,6 +90,17 @@
 		D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */; };
 		D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9651D05162643D200D96219 /* RMVirtualEarthSource.h */; };
 		D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9651D06162643D300D96219 /* RMVirtualEarthSource.m */; };
+		D969D4221AAF05C800BA04E0 /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D4171AAF05C800BA04E0 /* FMDatabase.h */; };
+		D969D4231AAF05C800BA04E0 /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = D969D4181AAF05C800BA04E0 /* FMDatabase.m */; };
+		D969D4241AAF05C800BA04E0 /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D4191AAF05C800BA04E0 /* FMDatabaseAdditions.h */; };
+		D969D4251AAF05C800BA04E0 /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = D969D41A1AAF05C800BA04E0 /* FMDatabaseAdditions.m */; };
+		D969D4261AAF05C800BA04E0 /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D41B1AAF05C800BA04E0 /* FMDatabasePool.h */; };
+		D969D4271AAF05C800BA04E0 /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = D969D41C1AAF05C800BA04E0 /* FMDatabasePool.m */; };
+		D969D4281AAF05C800BA04E0 /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D41D1AAF05C800BA04E0 /* FMDatabaseQueue.h */; };
+		D969D4291AAF05C800BA04E0 /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = D969D41E1AAF05C800BA04E0 /* FMDatabaseQueue.m */; };
+		D969D42A1AAF05C800BA04E0 /* FMDB.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D41F1AAF05C800BA04E0 /* FMDB.h */; };
+		D969D42B1AAF05C800BA04E0 /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = D969D4201AAF05C800BA04E0 /* FMResultSet.h */; };
+		D969D42C1AAF05C800BA04E0 /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = D969D4211AAF05C800BA04E0 /* FMResultSet.m */; };
 		D998671D1922163600FAECDD /* RMCalTopoMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D998671B1922163600FAECDD /* RMCalTopoMapSource.h */; };
 		D998671E1922163600FAECDD /* RMCalTopoMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D998671C1922163600FAECDD /* RMCalTopoMapSource.m */; };
 		D9986725192220D800FAECDD /* RMArcGisMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9986723192220D800FAECDD /* RMArcGisMapSource.h */; };
@@ -100,16 +111,6 @@
 		D9BBF6A61784173F00851665 /* RMOpenCycleMapOutdoorsSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9BBF6A41784173F00851665 /* RMOpenCycleMapOutdoorsSource.m */; };
 		D9E188CA171C14D00041E4E9 /* RMTopOSMUSAMapSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D9E188C8171C14CF0041E4E9 /* RMTopOSMUSAMapSource.h */; };
 		D9E188CB171C14D00041E4E9 /* RMTopOSMUSAMapSource.m in Sources */ = {isa = PBXBuildFile; fileRef = D9E188C9171C14D00041E4E9 /* RMTopOSMUSAMapSource.m */; };
-		DD2B374514CF8041008DE8CB /* FMDatabase.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B373F14CF8041008DE8CB /* FMDatabase.h */; };
-		DD2B374614CF8041008DE8CB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374014CF8041008DE8CB /* FMDatabase.m */; };
-		DD2B374714CF8041008DE8CB /* FMDatabaseAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B374114CF8041008DE8CB /* FMDatabaseAdditions.h */; };
-		DD2B374814CF8041008DE8CB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374214CF8041008DE8CB /* FMDatabaseAdditions.m */; };
-		DD2B374914CF8041008DE8CB /* FMResultSet.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B374314CF8041008DE8CB /* FMResultSet.h */; };
-		DD2B374A14CF8041008DE8CB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374414CF8041008DE8CB /* FMResultSet.m */; };
-		DD2B374F14CF814F008DE8CB /* FMDatabasePool.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B374B14CF814F008DE8CB /* FMDatabasePool.h */; };
-		DD2B375014CF814F008DE8CB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374C14CF814F008DE8CB /* FMDatabasePool.m */; };
-		DD2B375114CF814F008DE8CB /* FMDatabaseQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = DD2B374D14CF814F008DE8CB /* FMDatabaseQueue.h */; };
-		DD2B375214CF814F008DE8CB /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = DD2B374E14CF814F008DE8CB /* FMDatabaseQueue.m */; };
 		DD8CDB4A14E0507100B73EB9 /* RMMapQuestOSMSource.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8CDB4814E0507100B73EB9 /* RMMapQuestOSMSource.h */; };
 		DD8CDB4B14E0507100B73EB9 /* RMMapQuestOSMSource.m in Sources */ = {isa = PBXBuildFile; fileRef = DD8CDB4914E0507100B73EB9 /* RMMapQuestOSMSource.m */; };
 		DD8FD7541559E4A40044D96F /* RMUserLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = DD8FD7521559E4A40044D96F /* RMUserLocation.h */; };
@@ -235,6 +236,17 @@
 		D9651D021626380000D96219 /* RMOpenCycleMapTransportSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapTransportSource.m; sourceTree = "<group>"; };
 		D9651D05162643D200D96219 /* RMVirtualEarthSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMVirtualEarthSource.h; sourceTree = "<group>"; };
 		D9651D06162643D300D96219 /* RMVirtualEarthSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMVirtualEarthSource.m; sourceTree = "<group>"; };
+		D969D4171AAF05C800BA04E0 /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabase.h; path = fmdb/FMDatabase.h; sourceTree = "<group>"; };
+		D969D4181AAF05C800BA04E0 /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabase.m; path = fmdb/FMDatabase.m; sourceTree = "<group>"; };
+		D969D4191AAF05C800BA04E0 /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseAdditions.h; path = fmdb/FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		D969D41A1AAF05C800BA04E0 /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseAdditions.m; path = fmdb/FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		D969D41B1AAF05C800BA04E0 /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabasePool.h; path = fmdb/FMDatabasePool.h; sourceTree = "<group>"; };
+		D969D41C1AAF05C800BA04E0 /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
+		D969D41D1AAF05C800BA04E0 /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDatabaseQueue.h; path = fmdb/FMDatabaseQueue.h; sourceTree = "<group>"; };
+		D969D41E1AAF05C800BA04E0 /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMDatabaseQueue.m; path = fmdb/FMDatabaseQueue.m; sourceTree = "<group>"; };
+		D969D41F1AAF05C800BA04E0 /* FMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMDB.h; path = fmdb/FMDB.h; sourceTree = "<group>"; };
+		D969D4201AAF05C800BA04E0 /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FMResultSet.h; path = fmdb/FMResultSet.h; sourceTree = "<group>"; };
+		D969D4211AAF05C800BA04E0 /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = fmdb/FMResultSet.m; sourceTree = "<group>"; };
 		D998671B1922163600FAECDD /* RMCalTopoMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMCalTopoMapSource.h; sourceTree = "<group>"; };
 		D998671C1922163600FAECDD /* RMCalTopoMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMCalTopoMapSource.m; sourceTree = "<group>"; };
 		D9986723192220D800FAECDD /* RMArcGisMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMArcGisMapSource.h; sourceTree = "<group>"; };
@@ -245,16 +257,6 @@
 		D9BBF6A41784173F00851665 /* RMOpenCycleMapOutdoorsSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMOpenCycleMapOutdoorsSource.m; sourceTree = "<group>"; };
 		D9E188C8171C14CF0041E4E9 /* RMTopOSMUSAMapSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMTopOSMUSAMapSource.h; sourceTree = "<group>"; };
 		D9E188C9171C14D00041E4E9 /* RMTopOSMUSAMapSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMTopOSMUSAMapSource.m; sourceTree = "<group>"; };
-		DD2B373F14CF8041008DE8CB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
-		DD2B374014CF8041008DE8CB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
-		DD2B374114CF8041008DE8CB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
-		DD2B374214CF8041008DE8CB /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
-		DD2B374314CF8041008DE8CB /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
-		DD2B374414CF8041008DE8CB /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
-		DD2B374B14CF814F008DE8CB /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
-		DD2B374C14CF814F008DE8CB /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
-		DD2B374D14CF814F008DE8CB /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
-		DD2B374E14CF814F008DE8CB /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
 		DD8CDB4814E0507100B73EB9 /* RMMapQuestOSMSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMMapQuestOSMSource.h; sourceTree = "<group>"; };
 		DD8CDB4914E0507100B73EB9 /* RMMapQuestOSMSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMMapQuestOSMSource.m; sourceTree = "<group>"; };
 		DD8FD7521559E4A40044D96F /* RMUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMUserLocation.h; sourceTree = "<group>"; };
@@ -481,16 +483,17 @@
 		B8474B8C0EB40094006A0BC1 /* FMDB */ = {
 			isa = PBXGroup;
 			children = (
-				DD2B373F14CF8041008DE8CB /* FMDatabase.h */,
-				DD2B374014CF8041008DE8CB /* FMDatabase.m */,
-				DD2B374114CF8041008DE8CB /* FMDatabaseAdditions.h */,
-				DD2B374214CF8041008DE8CB /* FMDatabaseAdditions.m */,
-				DD2B374314CF8041008DE8CB /* FMResultSet.h */,
-				DD2B374414CF8041008DE8CB /* FMResultSet.m */,
-				DD2B374B14CF814F008DE8CB /* FMDatabasePool.h */,
-				DD2B374C14CF814F008DE8CB /* FMDatabasePool.m */,
-				DD2B374D14CF814F008DE8CB /* FMDatabaseQueue.h */,
-				DD2B374E14CF814F008DE8CB /* FMDatabaseQueue.m */,
+				D969D4171AAF05C800BA04E0 /* FMDatabase.h */,
+				D969D4181AAF05C800BA04E0 /* FMDatabase.m */,
+				D969D4191AAF05C800BA04E0 /* FMDatabaseAdditions.h */,
+				D969D41A1AAF05C800BA04E0 /* FMDatabaseAdditions.m */,
+				D969D41B1AAF05C800BA04E0 /* FMDatabasePool.h */,
+				D969D41C1AAF05C800BA04E0 /* FMDatabasePool.m */,
+				D969D41D1AAF05C800BA04E0 /* FMDatabaseQueue.h */,
+				D969D41E1AAF05C800BA04E0 /* FMDatabaseQueue.m */,
+				D969D41F1AAF05C800BA04E0 /* FMDB.h */,
+				D969D4201AAF05C800BA04E0 /* FMResultSet.h */,
+				D969D4211AAF05C800BA04E0 /* FMResultSet.m */,
 			);
 			name = FMDB;
 			path = FMDB/src;
@@ -585,12 +588,14 @@
 			files = (
 				B8C974250E8A19B2007D16AD /* RMOpenStreetMapSource.h in Headers */,
 				B8C974220E8A19B2007D16AD /* RMProjection.h in Headers */,
+				D969D4241AAF05C800BA04E0 /* FMDatabaseAdditions.h in Headers */,
 				B8C974230E8A19B2007D16AD /* RMTileCache.h in Headers */,
 				B8C974260E8A19B2007D16AD /* RMTile.h in Headers */,
 				B8C974270E8A19B2007D16AD /* RMPixel.h in Headers */,
 				B8C9742A0E8A19B2007D16AD /* RMTileImage.h in Headers */,
 				B8C9742B0E8A19B2007D16AD /* RMMemoryCache.h in Headers */,
 				B8C9742D0E8A19B2007D16AD /* RMFractalTileProjection.h in Headers */,
+				D969D42B1AAF05C800BA04E0 /* FMResultSet.h in Headers */,
 				B8C9742F0E8A19B2007D16AD /* RMMapLayer.h in Headers */,
 				B8C974620E8A19E8007D16AD /* RMTileSource.h in Headers */,
 				B8C9746B0E8A1A50007D16AD /* RMMapView.h in Headers */,
@@ -611,12 +616,10 @@
 				160E535713FBDB48004F82F9 /* RMMapTiledLayerView.h in Headers */,
 				1609AF8E14068B09008344B7 /* RMMapOverlayView.h in Headers */,
 				D9AC8C8D191BBC72002BD3F0 /* RMGroundOverlayMapSource.h in Headers */,
+				D969D4221AAF05C800BA04E0 /* FMDatabase.h in Headers */,
+				D969D42A1AAF05C800BA04E0 /* FMDB.h in Headers */,
 				16128CF5148D295300C23C0E /* RMOpenSeaMapSource.h in Headers */,
-				DD2B374514CF8041008DE8CB /* FMDatabase.h in Headers */,
-				DD2B374714CF8041008DE8CB /* FMDatabaseAdditions.h in Headers */,
-				DD2B374914CF8041008DE8CB /* FMResultSet.h in Headers */,
-				DD2B374F14CF814F008DE8CB /* FMDatabasePool.h in Headers */,
-				DD2B375114CF814F008DE8CB /* FMDatabaseQueue.h in Headers */,
+				D969D4281AAF05C800BA04E0 /* FMDatabaseQueue.h in Headers */,
 				DD8CDB4A14E0507100B73EB9 /* RMMapQuestOSMSource.h in Headers */,
 				1607499514E120A100D535F5 /* RMGenericMapSource.h in Headers */,
 				16FFF2CB14E3DBF700A170EC /* RMMapQuestOpenAerialSource.h in Headers */,
@@ -629,6 +632,7 @@
 				D998671D1922163600FAECDD /* RMCalTopoMapSource.h in Headers */,
 				1656665515A1DF7900EF3DC7 /* RMCoordinateGridSource.h in Headers */,
 				D91243411625D0FF0072884C /* RMOpenCycleMapLandscapeSource.h in Headers */,
+				D969D4261AAF05C800BA04E0 /* FMDatabasePool.h in Headers */,
 				D9986725192220D800FAECDD /* RMArcGisMapSource.h in Headers */,
 				D9651D031626380000D96219 /* RMOpenCycleMapTransportSource.h in Headers */,
 				D9651D07162643D300D96219 /* RMVirtualEarthSource.h in Headers */,
@@ -728,19 +732,16 @@
 				25757F501291C8640083D504 /* RMCircle.m in Sources */,
 				16EC85D3133CA6C300219947 /* RMAbstractMercatorTileSource.m in Sources */,
 				16EC85D5133CA6C300219947 /* RMAbstractWebMapSource.m in Sources */,
+				D969D42C1AAF05C800BA04E0 /* FMResultSet.m in Sources */,
 				16EC85D7133CA6C300219947 /* RMCacheObject.m in Sources */,
 				160EEDB013D41DEC007C5501 /* RMAnnotation.m in Sources */,
+				D969D4231AAF05C800BA04E0 /* FMDatabase.m in Sources */,
 				D9AC8C8E191BBC72002BD3F0 /* RMGroundOverlayMapSource.m in Sources */,
 				D998671E1922163600FAECDD /* RMCalTopoMapSource.m in Sources */,
 				1606C9FF13D86BA400547581 /* RMOpenCycleMapSource.m in Sources */,
 				160E535813FBDB48004F82F9 /* RMMapTiledLayerView.m in Sources */,
 				1609AF8F14068B09008344B7 /* RMMapOverlayView.m in Sources */,
 				16128CF6148D295300C23C0E /* RMOpenSeaMapSource.m in Sources */,
-				DD2B374614CF8041008DE8CB /* FMDatabase.m in Sources */,
-				DD2B374814CF8041008DE8CB /* FMDatabaseAdditions.m in Sources */,
-				DD2B374A14CF8041008DE8CB /* FMResultSet.m in Sources */,
-				DD2B375014CF814F008DE8CB /* FMDatabasePool.m in Sources */,
-				DD2B375214CF814F008DE8CB /* FMDatabaseQueue.m in Sources */,
 				DD8CDB4B14E0507100B73EB9 /* RMMapQuestOSMSource.m in Sources */,
 				1607499614E120A100D535F5 /* RMGenericMapSource.m in Sources */,
 				16FFF2CC14E3DBF700A170EC /* RMMapQuestOpenAerialSource.m in Sources */,
@@ -755,10 +756,13 @@
 				D9651D041626380000D96219 /* RMOpenCycleMapTransportSource.m in Sources */,
 				D9651D08162643D300D96219 /* RMVirtualEarthSource.m in Sources */,
 				D9045E9D1649D50B0016CCE7 /* RMGoogleMapSource.m in Sources */,
+				D969D4251AAF05C800BA04E0 /* FMDatabaseAdditions.m in Sources */,
 				D9E188CB171C14D00041E4E9 /* RMTopOSMUSAMapSource.m in Sources */,
+				D969D4271AAF05C800BA04E0 /* FMDatabasePool.m in Sources */,
 				D9346EBF172E932F009F7AA1 /* RMMBTilesSource.m in Sources */,
 				D91A730517330FBB0094BD89 /* RMOrdnanceSurveyOpenDataMapSource.m in Sources */,
 				D9BBF6A61784173F00851665 /* RMOpenCycleMapOutdoorsSource.m in Sources */,
+				D969D4291AAF05C800BA04E0 /* FMDatabaseQueue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
