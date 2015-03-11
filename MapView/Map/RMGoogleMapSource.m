@@ -94,7 +94,7 @@
   int                     zoom   = tile.zoom;
   
   //special parameters for retina devices
-  if ([[UIScreen mainScreen] scale] == 2.0) {
+  if ([[UIScreen mainScreen] scale] >= 2.0) {
     width  /= 2;
     height /= 2;
     scale  *= 2;
