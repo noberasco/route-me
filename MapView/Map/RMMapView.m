@@ -1237,7 +1237,7 @@
         _accumulatedDelta.x += delta.x;
         _accumulatedDelta.y += delta.y;
 
-        if (fabsf(_accumulatedDelta.x) < kZoomRectPixelBuffer && fabsf(_accumulatedDelta.y) < kZoomRectPixelBuffer)
+        if (fabs(_accumulatedDelta.x) < kZoomRectPixelBuffer && fabs(_accumulatedDelta.y) < kZoomRectPixelBuffer)
         {
             [_overlayView moveLayersBy:_accumulatedDelta];
             [self performSelector:@selector(correctPositionOfAllAnnotations) withObject:nil afterDelay:0.1];
