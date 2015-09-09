@@ -156,6 +156,8 @@
 
     UIImageView *_userLocationTrackingView;
     UIImageView *_userHeadingTrackingView;
+  
+    CLLocation *oldLocation;
 }
 
 @synthesize decelerationMode = _decelerationMode;
@@ -345,6 +347,7 @@
     [_userLocation release]; _userLocation = nil;
     [_userLocationTrackingView release]; _userLocationTrackingView = nil;
     [_userHeadingTrackingView release]; _userHeadingTrackingView = nil;
+    [oldLocation release]; oldLocation = nil;
     [super dealloc];
 }
 
@@ -2578,7 +2581,7 @@
             [_locationManager stopUpdatingHeading];
 
             if (self.userLocation)
-                [self locationManager:_locationManager didUpdateToLocation:self.userLocation.location fromLocation:self.userLocation.location];
+                [self locationManager:_locationManager didUpdateLocations:@[self.userLocation.location]];
 
             if (_userLocationTrackingView || _userHeadingTrackingView)
             {
@@ -2642,7 +2645,7 @@
                 [self zoomByFactor:exp2f(3 - [self zoom]) near:self.center animated:YES];
 
             if (self.userLocation)
-                [self locationManager:_locationManager didUpdateToLocation:self.userLocation.location fromLocation:self.userLocation.location];
+                [self locationManager:_locationManager didUpdateLocations:@[self.userLocation.location]];
 
             [_locationManager startUpdatingHeading];
 
@@ -2654,8 +2657,10 @@
         [_delegate mapView:self didChangeUserTrackingMode:_userTrackingMode animated:animated];
 }
 
-- (void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+- (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    CLLocation *newLocation = locations.lastObject;
+  
     if ( ! _showsUserLocation || _mapScrollView.isDragging)
         return;
 
@@ -2763,6 +2768,9 @@
 
     if ( ! [_annotations containsObject:_userLocation])
         [self addAnnotation:_userLocation];
+  
+    [oldLocation release];
+    oldLocation = [newLocation retain];
 }
 
 - (BOOL)locationManagerShouldDisplayHeadingCalibration:(CLLocationManager *)manager
